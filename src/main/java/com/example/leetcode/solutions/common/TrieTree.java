@@ -20,6 +20,12 @@ public class TrieTree {
 
     //根节点
     TrieNode root;
+    public static final char[] LETTERS = {
+            'a', 'b', 'c', 'd', 'e', 'f', 'g',
+            'h', 'i', 'j', 'k', 'l', 'm', 'n',
+            'o', 'p', 'q', 'r', 's', 't',
+            'u', 'v', 'w', 'x', 'y', 'z'
+    };
 
     public TrieTree() {
         root = new TrieNode();
@@ -105,15 +111,16 @@ public class TrieTree {
      */
     public void searchRecommends(TrieNode currentNode, int currentIdx, int depth, StringBuilder builder, List<String> recommends) {
         if (currentNode == null) return;
-        if (currentNode.isLeaf || depth <= 0) {//到叶子节点或者深度到底
-            builder.append((char) ('a' + currentIdx));
+        builder.append(LETTERS[currentIdx]);
+        if (currentNode.isLeaf) {//到叶子节点或者深度到底
             recommends.add(builder.toString());
-            return;
+//            return;
         }
-        for (int i = 0; i < currentNode.children.length; i++) {
-            if (currentNode.children[i] != null)
-                searchRecommends(currentNode.children[i], i, depth - 1, builder, recommends);
-        }
+        if (currentNode.children != null)
+            for (int i = 0; i < currentNode.children.length; i++)
+                if (currentNode.children[i] != null)
+                    searchRecommends(currentNode.children[i], i, depth - 1, builder, recommends);
+
         builder.setLength(builder.length() - 1);//移除
     }
 
