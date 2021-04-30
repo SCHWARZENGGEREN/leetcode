@@ -3,10 +3,13 @@ package com.example.leetcode.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: Rxh
@@ -86,8 +89,9 @@ public class StringUtil {
     public static void main(String[] args) {
         String append = "-";
         String hump =
-                "frog-jump";
+                "single-number-ii";
         System.out.println(getHumpName(hump, append));
+        getAllLetters();
     }
 
     public static String getRandomStr(int size) {
@@ -125,6 +129,30 @@ public class StringUtil {
             }
         }
         return sb.append(unicode.substring(pos)).toString();
+    }
+
+    /**
+     * 打印所有字母
+     */
+    public static void getAllLetters() {
+        List<Character> characters = new ArrayList<>();
+        int i = 0;
+        while (i < 26) {
+            characters.add((char) (i + 'a'));
+            i++;
+        }
+        System.out.println(
+                characters.stream()
+                        .map(String::valueOf)
+                        .collect(
+                                Collectors.joining()
+                        ));
+        System.out.println(
+                characters.stream()
+                        .map(String::valueOf)
+                        .collect(
+                                Collectors.joining("\',\'", "\'", "\'")
+                        ));
     }
 
 }

@@ -3,7 +3,9 @@ package com.example.leetcode.solutions;
 import com.example.leetcode.common.anno.Unsettled;
 import com.example.leetcode.solutions.common.TrieTree;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: Rxh
@@ -62,7 +64,7 @@ public class ImplementTriePrefixTree {
         trie.insert("dsafsa");
         trie.insert("appdsds");
 
-        System.out.println(trie.listRecommends("app",8));
+        System.out.println(trie.listRecommends("app", 8));
     }
 
 
