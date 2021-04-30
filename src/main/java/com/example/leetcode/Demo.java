@@ -109,5 +109,6 @@ public class Demo {
         Thread thread = new Thread();
         thread.start();
         thread.run();
+
     }
 }
