@@ -14,7 +14,7 @@ import com.example.leetcode.common.anno.Score;
  * 'Z' -> 26
  * 要 解码 已编码的消息，所有数字必须基于上述映射的方法，反向映射回字母（可能有多种方法）。例如，"11106" 可以映射为：
  * <p>
- * "AAJF" ，将消息分组为 (1 1 10 6)
+ * "AAJF" ，将消息分组为(1 1 10 6)
  * "KJF" ，将消息分组为 (11 10 6)
  * 注意，消息不能分组为  (1 11 06) ，因为 "06" 不能映射为 "F" ，这是由于 "6" 和 "06" 在映射中并不等价。
  * <p>
@@ -63,9 +63,23 @@ public class DecodeWays {
         String s = "110111111";
         s = "2101";
         s = "1201234";
-        s = "110111111";
-        System.out.println(numDecodings(s));
-        System.out.println(numDecodings1(s));
+        s = "11101111";
+        System.out.println(numDecodings("1"));
+        System.out.println(numDecodings("11"));
+        System.out.println(numDecodings("111"));
+        System.out.println(numDecodings("1111"));
+        System.out.println(numDecodings("11111"));
+        System.out.println(numDecodings("111111"));
+        System.out.println(numDecodings("1111111"));
+        System.out.println(numDecodings("11111111"));
+        System.out.println(numDecodings("10111111"));
+        System.out.println(numDecodings("11011111"));
+        System.out.println(numDecodings("11101111"));
+        System.out.println(numDecodings("11110111"));
+        System.out.println(numDecodings("11111011"));
+        System.out.println(numDecodings("11111101"));
+        System.out.println(numDecodings("11111110"));
+//        System.out.println(numDecodings1(s));
     }
 
 
@@ -76,10 +90,7 @@ public class DecodeWays {
      * 12012
      * 1201
      *
-     *
-     *
      * 1201234 21
-     *
      */
     //斐波那契数列
     private static final int[] FBNQ = {
@@ -94,6 +105,19 @@ public class DecodeWays {
             102334155, 165580141, 267914296, 433494437, 701408733,
             1134903170, 1836311903
     };
+    private static final long[] FBNQ1 = {
+        1L, 1L, 2L, 3L, 5L, 8L,
+            13L, 21L, 34L, 55L, 89L,
+            144L, 233L, 377L, 610L, 987L,
+            1597L, 2584L, 4181L, 6765L,
+            10946L, 17711L, 28657L, 46368L, 75025L,
+            121393L, 196418L, 317811L, 514229L, 832040L,
+            1346269L, 2178309L, 3524578L, 5702887L, 9227465L,
+            14930352L, 24157817L, 39088169L, 63245986L,
+            102334155L, 165580141L, 267914296L, 433494437L, 701408733L,
+            1134903170L, 1836311903L, 2971215073L, 4807526976L
+    };
+
 
     /**
      * 找出输入数字可能来自的解码方式
@@ -141,7 +165,7 @@ public class DecodeWays {
                         if (s.charAt(i) > '2') return 0;//0只能挂在数字后面,如果组成的数字又>=30 ,就会断链
                         //后面是0 要排除前面的可能性,比如 110 只有 1 10 一种组合
                         fullRes -= FBNQ[len - i];
-                    }else if (s.charAt(i + 1) > '2' || (s.charAt(i + 1) == '2' && s.charAt(i) > '6')){
+                    } else if (s.charAt(i + 1) > '2' || (s.charAt(i + 1) == '2' && s.charAt(i) > '6')) {
                         fullRes -= FBNQ[len - 2 - i];//组成的数字>26,排除拼接下个数字的可能性
                     }
                 }
@@ -150,6 +174,4 @@ public class DecodeWays {
         }
         return fullRes;
     }
-
-
 }

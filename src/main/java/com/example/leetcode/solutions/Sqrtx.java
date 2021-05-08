@@ -1,6 +1,6 @@
 package com.example.leetcode.solutions;
 
-import com.example.leetcode.common.anno.Unsettled;
+import com.example.leetcode.common.anno.Score;
 
 /**
  * @Auther: Rxh
@@ -26,14 +26,6 @@ import com.example.leetcode.common.anno.Unsettled;
 public class Sqrtx {
 
     public static void main(String[] args) {
-//        System.out.println(mySqrt(2));
-//        System.out.println(mySqrt(3));
-//        System.out.println(mySqrt(8));
-//        System.out.println(mySqrt(18));
-//        System.out.println(mySqrt(9999));
-        System.out.println(mySqrt(8192));
-        System.out.println(Math.pow(8, 0.5));
-
 //        System.out.println(
 //                ThreadLocalRandom.current()
 //                        .ints(80, 0, 100)
@@ -41,25 +33,48 @@ public class Sqrtx {
 //                        .sorted()
 //                        .collect(Collectors.toList())
 //        );
+
+        System.out.println(mySqrt(Integer.MAX_VALUE));
+        System.out.println(mySqrt(46340 * 46340 - 1));
+        System.out.println(mySqrt(999999));
+        System.out.println(mySqrt(99999));
+        System.out.println(mySqrt(9999));
+        System.out.println(mySqrt(999));
+        System.out.println(mySqrt(99));
+        System.out.println(mySqrt(9));
     }
 
     /**
-     * 通过二分法查找,一般情况,n^-2 < n/2,不断二分查找即可
-     * TODO 精度问题
+     * 先根据二进制取左右边界,然后左右分别开方作为目标数字的左右边界
+     * 去他娘的优雅
      * @param x
      * @return
      */
-    @Unsettled
+    @Score(time = Score.S.SSS, memory = Score.S.A)
     public static int mySqrt(int x) {
-        int tmp = x / 2, divide;
-        if (tmp <= 1) return tmp <= 0 ? x : 1;
-        while ((divide = x / tmp) > tmp || divide < tmp - 1) {
-            //除数过小时削减一半;除数过大是增加一半
-            tmp = tmp / 2 + (divide < tmp - 1 ? 0 : tmp);
+        if (x == 0) return 0;
+        if (x <= 3) return 1;
+
+        int idx = 30;
+        int right = Integer.MAX_VALUE, left = 0, mid, pow;//先寻找x的左右边界
+        while (idx >= 0) {
+            if (x >= (left = 1 << idx)) break;
+            right = left;
+            idx--;
+        }
+        right = right >> ((idx + 1) >> 1);//对x的左右边界开放处理:如果idx是奇数,就前进一位,因为 2^n * 2^n = 2^(2n),要保证idx是偶数
+        left = left >> ((idx + 1) >> 1);
+        if (right > 46340) right = 46340;//防止溢出
+        while (left < right) {
+            mid = (right + left + 1) / 2;
+            if ((pow = mid * mid) == x || left == mid) return mid;
+            if (pow > x) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
         }
 
-        return divide == tmp ? tmp : tmp - 1;
+        return left;
     }
-
-
 }

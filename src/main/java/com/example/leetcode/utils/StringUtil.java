@@ -89,7 +89,7 @@ public class StringUtil {
     public static void main(String[] args) {
         String append = "-";
         String hump =
-                "single-number-ii";
+                "xor-operation-in-an-array";
         System.out.println(getHumpName(hump, append));
         getAllLetters();
     }
