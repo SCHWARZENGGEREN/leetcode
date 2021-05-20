@@ -50,7 +50,7 @@ public class NumberOfWaysToStayInTheSamePlaceAfterSomeSteps {
 
     /**
      * 使用动态数组dp[i][j] 记录i步后停留在j处的方案数
-     *
+     * dp
      * @param steps
      * @param arrLen
      * @return
