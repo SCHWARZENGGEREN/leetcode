@@ -1,5 +1,6 @@
 package com.example.leetcode.solutions;
 
+import com.example.leetcode.common.anno.Score;
 import com.example.leetcode.common.anno.Unsettled;
 import com.example.leetcode.solutions.common.TrieTree;
 
@@ -71,7 +72,7 @@ public class ImplementTriePrefixTree {
     /**
      * 使用布隆过滤器模拟
      */
-    @Unsettled
+    @Score(time = Score.S.A,memory = Score.S.B)
     static class Trie {
 
         TrieTree root;

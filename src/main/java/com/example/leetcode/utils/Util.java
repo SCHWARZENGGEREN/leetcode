@@ -12,6 +12,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @Auther: Rxh
@@ -132,6 +133,10 @@ public class Util {
         long start = System.currentTimeMillis();
         function.accept(null);
         System.out.println("InvokeTime: " + (System.currentTimeMillis() - start));
+    }
+
+    public static <T, R> R executeIf(boolean condition, Function<T, R> function, T param) {
+        return condition ? function.apply(param) : null;
     }
 
 

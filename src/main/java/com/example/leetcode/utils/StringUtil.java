@@ -89,9 +89,9 @@ public class StringUtil {
     public static void main(String[] args) {
         String append = "-";
         String hump =
-                "xor-operation-in-an-array";
+                "valid-anagram";
         System.out.println(getHumpName(hump, append));
-        getAllLetters();
+//        getAllLetters();
     }
 
     public static String getRandomStr(int size) {
