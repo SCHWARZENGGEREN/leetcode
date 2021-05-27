@@ -99,6 +99,16 @@ public class NumberOfWaysToStayInTheSamePlaceAfterSomeSteps {
     /**
      * 回溯 太慢
      *
+     * [-1,0,1]
+     * -1 -1
+     * -1 0
+     * -1 1
+     * 0 -1
+     * 0 0
+     * 0 1
+     * 1 -1
+     * 1 0
+     * 1 1
      * @return
      */
     @Score(time = Score.S.OT, memory = Score.S.OOM)

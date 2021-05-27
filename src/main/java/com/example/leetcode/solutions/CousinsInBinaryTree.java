@@ -1,5 +1,6 @@
 package com.example.leetcode.solutions;
 
+import com.example.leetcode.common.anno.Score;
 import com.example.leetcode.solutions.common.TreeNode;
 
 /**
@@ -32,16 +33,12 @@ public class CousinsInBinaryTree {
     public static void main(String[] args) {
         Integer[] root = {
                 1,
-                2, 3,
-                null, 4, null, 5
+                3, 2,
+                null, null, 7, 4,
+                null, null, 5, 6,
+                null, 8, null, 9
         };
-
-        root = new Integer[]{
-                1,
-                2,3,
-                null,4
-        };
-        int x = 2, y = 3;
+        int x = 8, y = 9;
         System.out.println(
                 isCousins(
                         TreeNode.buildTreeNode(root),
@@ -58,20 +55,29 @@ public class CousinsInBinaryTree {
      * @param y
      * @return
      */
+    @Score(time = Score.S.D, memory = Score.S.D)
     public static boolean isCousins(TreeNode root, int x, int y) {
-        return getDepth(root, x, 0) == getDepth(root, y, 0);
+        TreeNode[] fNode1 = new TreeNode[1];
+        TreeNode[] fNode2 = new TreeNode[1];
+        int dep1 = getDepth(fNode1, root, x, 0);
+        int dep2 = getDepth(fNode2, root, y, 0);
+        return dep1 == dep2 && fNode1[0] != fNode2[0];
     }
 
-    public static int getDepth(TreeNode root, int val, int depth) {
+    public static int getDepth(TreeNode[] fNode, TreeNode root, int val, int depth) {
         if (root != null) {
             if (val == root.val) {
-                System.out.println(String.format("val: %d 的深度为: %d", val, depth));
+                System.out.println(String.format("val: %d 的深度为: %d,父节点为: %s", val, depth, fNode[0]));
                 return depth;
             } else {
                 //向左and向右
-                int rDep = getDepth(root.right, val, depth + 1);
-                return rDep > 0 ? rDep :
-                        getDepth(root.left, val, depth + 1);
+                fNode[0] = root;
+                int rDep = getDepth(fNode, root.right, val, depth + 1);
+                if (rDep < 0) {
+                    fNode[0] = root;
+                    rDep = getDepth(fNode, root.left, val, depth + 1);
+                }
+                return rDep;
             }
         }
         return -1;

@@ -89,7 +89,7 @@ public class StringUtil {
     public static void main(String[] args) {
         String append = "-";
         String hump =
-                "valid-anagram";
+                "hamming-distance";
         System.out.println(getHumpName(hump, append));
 //        getAllLetters();
     }
