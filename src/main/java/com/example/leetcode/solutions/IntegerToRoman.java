@@ -48,6 +48,8 @@ package com.example.leetcode.solutions;
 public class IntegerToRoman {
 
     public static void main(String[] args) {
+        for (int i = 1;i<=10;i++)
+            System.out.print("\""+S1.intToRoman(i)+"\""+",");
         System.out.println(S1.intToRoman(654321));
     }
 

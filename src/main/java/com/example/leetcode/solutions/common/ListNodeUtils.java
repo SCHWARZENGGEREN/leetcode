@@ -9,6 +9,15 @@ import java.math.BigInteger;
  */
 public class ListNodeUtils {
 
+    public static ListNode getLNByArray(int... nums) {
+        ListNode dummy = new ListNode(0),current = dummy;
+        for (int num : nums) {
+            current.next = new ListNode(num);
+            current = current.next;
+        }
+        return dummy.next;
+    }
+
     public static ListNode getLNByString(String numStr) {
         int length = numStr.length();
         int i = 0;

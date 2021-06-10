@@ -3,10 +3,7 @@ package com.example.leetcode.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -44,23 +41,24 @@ public class StringUtil {
         System.out.println("  end: " + System.currentTimeMillis());
     }
 
+    private static final List<String> ROMAN_NUMS = Arrays.asList(
+            "i","ii","iii","iv","v","vi","vii","viii","ix","x"
+    );
     /**
      * 以连接符拆解字符并转换为驼峰
-     *
+     * 自动转为小写
      * @param appendName
      * @param append
      * @return
      */
     public static String getHumpName(String appendName, String append) {
-        String[] split = appendName.split(append);
+        String[] split = appendName.toLowerCase().split(append);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < split.length; i++) {
             String subStr = split[i];
             if (subStr != null && subStr.length() > 0) {
                 if (i == split.length - 1
-                        && (StringUtils.equals(subStr, "i") ||
-                        StringUtils.equals(subStr, "ii") ||
-                        StringUtils.equals(subStr, "iii"))) {
+                        && ROMAN_NUMS.contains(subStr)) {
                     sb.append(subStr.toUpperCase());
                 } else {
                     sb.append(subStr.replaceFirst(String.valueOf(subStr.charAt(0)), String.valueOf(subStr.charAt(0)).toUpperCase()));
@@ -89,7 +87,7 @@ public class StringUtil {
     public static void main(String[] args) {
         String append = "-";
         String hump =
-                "hamming-distance";
+                "coin-change-2";
         System.out.println(getHumpName(hump, append));
 //        getAllLetters();
     }
