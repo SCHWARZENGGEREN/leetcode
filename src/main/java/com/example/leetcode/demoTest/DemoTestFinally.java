@@ -51,4 +51,17 @@ public class DemoTestFinally {
             list.remove(0);
         }
     }
+
+    static void testBreakAndFinally() {
+        for (int i = 0; i < 10; i++) {
+            try {
+                System.out.println(i+" ===");
+                if (i >= 8) break;
+            } catch (Exception e) {
+
+            } finally {
+                System.out.println("finally:" + i);
+            }
+        }
+    }
 }

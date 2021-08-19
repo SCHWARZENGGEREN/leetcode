@@ -18,7 +18,8 @@ public @interface Score {
      * S:75-90
      * A:50-75
      * B:25-50
-     * C:0-25
+     * C:10-25
+     * D:0-10
      */
     enum S {
         SSS,

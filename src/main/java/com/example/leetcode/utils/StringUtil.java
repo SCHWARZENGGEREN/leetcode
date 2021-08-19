@@ -87,7 +87,7 @@ public class StringUtil {
     public static void main(String[] args) {
         String append = "-";
         String hump =
-                "coin-change-2";
+                "reverse-vowels-of-a-string";
         System.out.println(getHumpName(hump, append));
 //        getAllLetters();
     }
