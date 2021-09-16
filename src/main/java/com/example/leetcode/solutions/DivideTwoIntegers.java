@@ -1,5 +1,6 @@
 package com.example.leetcode.solutions;
 
+import com.example.leetcode.common.anno.Score;
 import com.example.leetcode.common.anno.Unsettled;
 
 import java.util.HashMap;
@@ -34,15 +35,20 @@ public class DivideTwoIntegers {
     public static void main(String[] args) {
         int dividend, divisor;
 
+        dividend = 30;
+        divisor = -4;
+
         dividend = 1857849;
         divisor = -4232;
 
         dividend = 2147483647;
-        divisor = 3;
+        divisor = -3;
 
-//        System.out.println(dividend / divisor);
-//        System.out.println(divide1(dividend, divisor));
-        System.out.println(3 / 2);
+        dividend = -2147483648;
+        divisor = 2;
+
+        System.out.println(dividend / divisor);
+        System.out.println(divide1(dividend, divisor));
     }
 
     /**
@@ -52,78 +58,37 @@ public class DivideTwoIntegers {
      * @param divisor
      * @return
      */
+    @Score(time = Score.S.SSS, memory = Score.S.B)
     public static int divide1(int dividend, int divisor) {
-        //只有被除数为-1时才会出现越界
         if (dividend == 0) return 0;
         if (divisor == 1) return dividend;
-        if (dividend == divisor) return 1;
-        if (dividend + divisor == 0) return -1;
-        if (divisor == Integer.MIN_VALUE && dividend > 0) return 0;
-        if (dividend == Integer.MIN_VALUE && divisor == -1) return Integer.MIN_VALUE;
+        if (divisor == -1) return dividend > Integer.MIN_VALUE ? -dividend : Integer.MAX_VALUE;
 
-        boolean ddPos = dividend > 0, diPos = divisor > 0, diffSymbol = ddPos ^ diPos;
-
-        if (Math.abs(dividend) < Math.abs(divisor)) return 0;
-
-        Map<Integer, Integer> powerCache = new HashMap<>();//缓存数字的倍数
-        int drift, multiRes,//位移数 & 乘算结果
-                absDivisor = Math.abs(divisor), absDividend = Math.abs(dividend),
-                diff = absDividend,//差距
+        boolean hasSign = (dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0);
+        //为防止越界,统一用负数
+        dividend = dividend > 0 ? -dividend : dividend;
+        divisor = divisor > 0 ? -divisor : divisor;
+        int tempDividend = dividend,
+                tempDivisor = divisor,
+                tempMulti = 1,
                 res = 0;
-        while (diff > absDivisor) {
-            drift = 0;
-            while ((multiRes = get2Power(absDivisor, ++drift, powerCache)) < diff && multiRes > 0) {}
-            if (multiRes > diff || multiRes < 0) {
-                multiRes = powerCache.get(drift - 1);
-                drift--;
-            }
-            diff -= multiRes;
-            res += 2 << (drift - 1);
-            //如果结果<2*divisor 则+1终止
-            if (diff > absDivisor && diff < powerCache.get(1)) {
-                res++;
-                break;
-            }
-        }
-        return ddPos ^ diPos ? res : -res;
-    }
-
-    private static int get2Power(int num, int drift, Map<Integer, Integer> powerCache) {
-        Integer cache = powerCache.get(drift);
-        if (cache == null) {
-            cache = num << drift;
-            powerCache.put(drift, cache);
-        }
-        return cache;
-    }
-
-
-    /**
-     * 十倍界王拳!
-     * 为了避免超出int空间,只计算到Integer.MAX以下最大值
-     * 如果超出范围,返回-1
-     *
-     * @param base  >=0
-     * @param power 乘数
-     * @return
-     */
-    private static int multi(int base, int power) {
-        if (base == 0) return 0;
-        if (base == 1) return power;
-
-        int tempRes = base;
-        int tempIdx = 0;
-        while (tempIdx++ < power) {
-            if (Integer.MAX_VALUE - tempRes > base) {
-                tempRes += base;
+        //以 1,2,4,8... 等倍率靠近
+        while (tempDivisor >= tempDividend) {
+            if (tempDivisor <= tempDividend - tempDivisor) {
+                //reset
+                res += tempMulti;
+                tempMulti = 1;
+                tempDividend = tempDividend - tempDivisor;
+                tempDivisor = divisor;
             } else {
-                //超出界限
-                tempRes = -1;
-                break;
+                tempDivisor += tempDivisor;
+                tempMulti += tempMulti;
             }
         }
-        return tempRes;
+
+        return hasSign ? -res : res;
     }
+
 
     private static final int[] LEVELS = {10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
 

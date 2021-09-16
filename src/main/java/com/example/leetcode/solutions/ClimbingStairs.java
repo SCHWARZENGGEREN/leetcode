@@ -41,6 +41,7 @@ public class ClimbingStairs {
      * f(n) = f(n-1)+f(n-2),刚好是斐波那契数列
      * 直接用递归计算会超时,根据数列规律在一次遍历中也能算出结果
      * 也就是动态数组
+     *
      * @param n
      * @return
      */
@@ -87,7 +88,7 @@ public class ClimbingStairs {
      * @return
      */
     @Tips(tip = "在实际情况中,像这种答案固定的问题直接将答案算好对系统来说是最优解")
-    @Score(time = Score.S.SSS,memory = Score.S.SSS)
+    @Score(time = Score.S.SSS, memory = Score.S.SSS)
     public static int climbStairs1(int n) {
         int result = 0;
         switch (n) {

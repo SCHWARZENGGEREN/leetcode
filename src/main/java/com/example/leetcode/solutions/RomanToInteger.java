@@ -59,7 +59,7 @@ public class RomanToInteger {
     static class S0 {
         static int romanToInt(String s) {
             for (int i = 1; i <= 1000000; i++) {
-                if (s.equals(IntegerToRoman.S1.intToRoman(i))) return i;
+                if (s.equals(IntegerToRoman.intToRoman(i))) return i;
             }
             return 0;
         }

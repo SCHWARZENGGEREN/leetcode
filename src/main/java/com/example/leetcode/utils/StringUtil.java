@@ -42,11 +42,13 @@ public class StringUtil {
     }
 
     private static final List<String> ROMAN_NUMS = Arrays.asList(
-            "i","ii","iii","iv","v","vi","vii","viii","ix","x"
+            "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"
     );
+
     /**
      * 以连接符拆解字符并转换为驼峰
      * 自动转为小写
+     *
      * @param appendName
      * @param append
      * @return
@@ -87,9 +89,11 @@ public class StringUtil {
     public static void main(String[] args) {
         String append = "-";
         String hump =
-                "reverse-vowels-of-a-string";
+                "word-search-ii";
         System.out.println(getHumpName(hump, append));
 //        getAllLetters();
+
+        System.out.println(unicode(hump));
     }
 
     public static String getRandomStr(int size) {
@@ -127,6 +131,21 @@ public class StringUtil {
             }
         }
         return sb.append(unicode.substring(pos)).toString();
+    }
+
+    public static String unicode(String string) {
+        if (string == null || "".equals(string)) {
+            return null;
+        }
+        String hex;
+        StringBuilder sb = new StringBuilder();
+        for (char c : string.toCharArray()) {
+            hex = Integer.toHexString((int) c);
+            sb.append("\\u")
+                    .append(getDuplicateStr(4 - hex.length(), "0"))
+                    .append(hex);
+        }
+        return sb.toString();
     }
 
     /**

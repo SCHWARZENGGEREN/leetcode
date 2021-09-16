@@ -49,69 +49,67 @@ public class IntegerToRoman {
 
     public static void main(String[] args) {
         for (int i = 1;i<=10;i++)
-            System.out.print("\""+S1.intToRoman(i)+"\""+",");
-        System.out.println(S1.intToRoman(654321));
+            System.out.print("\""+intToRoman(i)+"\""+",");
+        System.out.println(intToRoman(654321));
     }
 
-    static class S1 {
-        /**
-         * 阿拉伯数字转罗马数字(1-3999)
-         * <p>
-         * 1         I
-         * 5         V
-         * 10        X
-         * 50        L
-         * 100       C
-         * 500       D
-         * 1000      M
-         * 5000      v
-         * 10000     x
-         * 50000     l
-         * 100000    c
-         * 500000    d
-         * 1000000   m
-         *
-         * @param num
-         * @return
-         */
-        static String intToRoman(int num) {
-            if (num <= 0 || num > 1000000) return null;
-            StringBuilder sb = new StringBuilder();
+    /**
+     * 阿拉伯数字转罗马数字(1-3999)
+     * <p>
+     * 1         I
+     * 5         V
+     * 10        X
+     * 50        L
+     * 100       C
+     * 500       D
+     * 1000      M
+     * 5000      v
+     * 10000     x
+     * 50000     l
+     * 100000    c
+     * 500000    d
+     * 1000000   m
+     *
+     * @param num
+     * @return
+     */
+    public static String intToRoman(int num) {
+        if (num <= 0 || num > 1000000) return null;
+        StringBuilder sb = new StringBuilder();
 
-            char[][] romanDigss = {
-                    {'I', 'V', 'X'},
-                    {'X', 'L', 'C'},
-                    {'C', 'D', 'M'},
-                    {'M', 'v', 'x'},
-                    {'x', 'l', 'c'},
-                    {'c', 'd', 'm'}
-            };
+        char[][] romanDigss = {
+                {'I', 'V', 'X'},
+                {'X', 'L', 'C'},
+                {'C', 'D', 'M'},
+                {'M', 'v', 'x'},
+                {'x', 'l', 'c'},
+                {'c', 'd', 'm'}
+        };
 
-            int dig = 0;
-            while (num > 0 && num / 10 >= 0) {
-                char[] romanDigs = romanDigss[dig];
-                int i = num % 10;
-                if (i == 9) {
-                    sb.append(romanDigs[2])
-                            .append(romanDigs[0]);
-                } else if (i >= 5) {
-                    int left = i - 5;
-                    while (left-- > 0) {
-                        sb.append(romanDigs[0]);
-                    }
-                    sb.append(romanDigs[1]);
-                } else if (i == 4) {
-                    sb.append(romanDigs[1]).append(romanDigs[0]);
-                } else if (i > 0) {
-                    while (i-- > 0) {
-                        sb.append(romanDigs[0]);
-                    }
-                }//0 不处理
-                num /= 10;
-                dig++;
-            }
-
-            return sb.reverse().toString();
+        int dig = 0;
+        while (num > 0 && num / 10 >= 0) {
+            char[] romanDigs = romanDigss[dig];
+            int i = num % 10;
+            if (i == 9) {
+                sb.append(romanDigs[2])
+                        .append(romanDigs[0]);
+            } else if (i >= 5) {
+                int left = i - 5;
+                while (left-- > 0) {
+                    sb.append(romanDigs[0]);
+                }
+                sb.append(romanDigs[1]);
+            } else if (i == 4) {
+                sb.append(romanDigs[1]).append(romanDigs[0]);
+            } else if (i > 0) {
+                while (i-- > 0) {
+                    sb.append(romanDigs[0]);
+                }
+            }//0 不处理
+            num /= 10;
+            dig++;
         }
+
+        return sb.reverse().toString();
     }
 }
