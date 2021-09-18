@@ -1,4 +1,4 @@
-package com.example.leetcode.other.virtual_life;
+package com.example.leetcode.other.oneD.virtual_life;
 
 /**
  * @Auther: Rxh
