@@ -19,33 +19,60 @@ public class ValidSudoku {
     public static void main(String[] args) {
 
         char[][] board = {
-                {'.','.','.','9','.','.','.','.','.'},
-                {'.','.','.','.','.','.','.','.','.'},
-                {'.','.','3','.','.','.','.','.','1'},
-                {'.','.','.','.','.','.','.','.','.'},
-                {'1','.','.','.','.','.','3','.','.'},
-                {'.','.','.','.','2','.','6','.','.'},
-                {'.','9','.','.','.','.','.','7','.'},
-                {'.','.','.','.','.','.','.','.','.'},
-                {'8','.','.','8','.','.','.','.','.'}
+                {'.', '.', '.', '9', '.', '.', '.', '.', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'.', '.', '3', '.', '.', '.', '.', '.', '1'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'1', '.', '.', '.', '.', '.', '3', '.', '.'},
+                {'.', '.', '.', '.', '2', '.', '6', '.', '.'},
+                {'.', '9', '.', '.', '.', '.', '.', '7', '.'},
+                {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+                {'8', '.', '.', '8', '.', '.', '.', '.', '.'}
         };
         SudokuUtils.printBoard(board);
         System.out.println(isValidSudoku(board));
+        System.out.println(isValidSudoku1(board));
+    }
+
+    /**
+     * 记录每行每列每个小九宫格是否包含某数字
+     *
+     * @param board
+     * @return
+     */
+    @Score(time = Score.S.S, memory = Score.S.B)
+    public static boolean isValidSudoku1(char[][] board) {
+        boolean[][] col = new boolean[9][9];//列
+        boolean[][] row = new boolean[9][9];//行
+        boolean[][] square = new boolean[9][9];//九宫格
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] != '.') {
+                    int numIdx = board[i][j] - '1';
+                    int squareIdx = i / 3 * 3 + j / 3;
+                    if (col[j][numIdx] || row[i][numIdx] || square[squareIdx][numIdx]) {
+                        return false;
+                    } else {
+                        square[squareIdx][numIdx] = row[i][numIdx] = col[j][numIdx] = true;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     /**
      * 校验行列以及小九宫格内是否有数字重复
-     * TODO 效率
+     * TODO 优化
+     *
      * @param board
      * @return
      */
-    @Score(time=Score.S.B,memory = Score.S.A)
+    @Score(time = Score.S.B, memory = Score.S.A)
     public static boolean isValidSudoku(char[][] board) {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                if (y == 8 && x == 0) {
-                    System.out.println();
-                }
                 char current = board[y][x];
                 if (current == '.') continue;
                 if (checkRepeat(board, x, y, current)) {
