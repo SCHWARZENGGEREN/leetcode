@@ -34,7 +34,7 @@ public class BinodeLcci {
                 1, 3,   null, 6,
                 0
         };
-        TreeNode.printTreeNodeByRLRL(
+        TreeNode.printTreeNodeByRLR(
                 convertBiNode(
                         TreeNode.buildTreeNode(nums)
                 )

@@ -88,12 +88,17 @@ public class StringUtil {
 
     public static void main(String[] args) {
         String append = "-";
-        String hump =
-                "wildcard-matching";
+        String hump = "simplified-fractions";
         System.out.println(getHumpName(hump, append));
 //        getAllLetters();
 
         System.out.println(unicode(hump));
+
+        System.out.println(
+                requestLog2Json(
+                        "status=0, scene=0, applyId=null, goodsId=null, productId=1892, goodsName=活动促销白萝卜, goodsDescription=活动商品萝卜, goodsIllustrate=null, goodsSpecification=约500kg, goodsImage=https://c2c-test.oss-cn-shanghai.aliyuncs.com/uftp/2021_12_02/c0ab527a77f94733b637b853db5e295e.jpg, goodsHomeImage=null, typeId=null, costPrice=1, originalPrice=null, currentPrice=null, suggestPrice=1, expireTime=null, expirationDate=null, pruductDate=null, pruductAddress=null, serviceCharge=null, purchaseLimit=-1, goodsImageDetails=[https://c2c-test.oss-cn-shanghai.aliyuncs.com/uftp/2021_12_02/2664227a106e4075964d223114435738.jpg], stock=-1, anyUpd=false, onShelf=false, secondTypeId=16, firstTypeId=3, groupId=null, groupName=null, groupDescription=null, callService=0, supplierGoodsStatus=null"
+                )
+        );
     }
 
     public static String getRandomStr(int size) {
@@ -170,6 +175,33 @@ public class StringUtil {
                         .collect(
                                 Collectors.joining("\',\'", "\'", "\'")
                         ));
+    }
+
+    /**
+     * @return
+     */
+    public static String requestLog2Json(String requestLog){
+        String[] split = requestLog.split(", ");
+        StringBuilder sb =new StringBuilder("{");
+        for (String s : split) {
+            String[] split1 = s.split("=");
+            sb.append("\"")
+                    .append(split1[0])
+                    .append("\"")
+                    .append(":");
+
+            if (!isNumric(split1[1])){
+                sb.append("\"");
+            }
+            sb.append(split1[1]);
+            if (!isNumric(split1[1])){
+                sb.append("\"");
+            }
+            sb.append(",");
+        }
+        return sb
+                .replace(sb.length()-1,sb.length(),"}")
+                .toString();
     }
 
 }

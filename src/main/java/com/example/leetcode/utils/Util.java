@@ -1,7 +1,7 @@
 package com.example.leetcode.utils;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.util.CollectionUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -94,7 +95,7 @@ public class Util {
     }
 
     public static <T> void printlnCollection(Collection<T> collection) {
-        if (!CollectionUtils.isEmpty(collection)) {
+        if (CollectionUtils.isNotEmpty(collection)) {
             collection.forEach(System.out::println);
         }
     }
@@ -137,6 +138,26 @@ public class Util {
 
     public static <T, R> R executeIf(boolean condition, Function<T, R> function, T param) {
         return condition ? function.apply(param) : null;
+    }
+
+    /**
+     * 换行打印
+     *
+     * @param list
+     * @return
+     */
+    public static String printFeedLine(List<String> list) {
+        if (CollectionUtils.isNotEmpty(list)) {
+            StringBuilder sb = new StringBuilder(list.toString());
+
+            sb.insert(1, "\r\n");
+            if (!list.get(list.size()-1).endsWith("\r\n")){
+                sb.insert(sb.length() - 2, "\r\n");
+            }
+            return sb.toString()
+                    .replaceAll("\r\n, ",", \r\n");
+        }
+        return null;
     }
 
 

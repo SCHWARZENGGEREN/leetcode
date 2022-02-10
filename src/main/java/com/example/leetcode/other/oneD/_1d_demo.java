@@ -1,5 +1,8 @@
 package com.example.leetcode.other.oneD;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Auther: Rxh
  * @Date: 2021/9/18 16:43
@@ -12,6 +15,8 @@ public class _1d_demo {
     }
 
     static class Man {
+        List<Event> allEvents = new ArrayList<>();
+        List<Event> newEvents = new ArrayList<>();
         int sex = 0,
                 age = 0,
                 iq = 0,
@@ -28,6 +33,5 @@ public class _1d_demo {
 
         }
     }
-
 
 }

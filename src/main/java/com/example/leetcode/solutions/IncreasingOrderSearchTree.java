@@ -44,7 +44,7 @@ public class IncreasingOrderSearchTree {
                 null, null, 3
         };
         TreeNode treeNode = TreeNode.buildTreeNode(nums1);
-        TreeNode.printTreeNodeByRLRL(increasingBST(treeNode));
+        TreeNode.printTreeNodeByRLR(increasingBST(treeNode));
     }
 
     /**

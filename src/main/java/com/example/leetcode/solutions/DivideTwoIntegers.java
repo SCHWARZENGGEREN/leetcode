@@ -85,23 +85,6 @@ public class DivideTwoIntegers {
                 tempMulti += tempMulti;
             }
         }
-
         return hasSign ? -res : res;
     }
-
-
-    private static final int[] LEVELS = {10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
-
-    private static int getLevel(int num) {
-        int absNum = Math.abs(num);
-        int tempIdx = 0;
-        while (tempIdx < LEVELS.length) {
-            if (absNum > LEVELS[tempIdx]) {
-                break;
-            }
-            tempIdx++;
-        }
-        return tempIdx;
-    }
-
 }
