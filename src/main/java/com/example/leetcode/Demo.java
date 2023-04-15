@@ -1,7 +1,5 @@
 package com.example.leetcode;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,15 +31,15 @@ public class Demo {
         list.remove(-1);
     }
 
-    static void testSystemArrayCopy(){
-        int[][] twoDimonArr = {{1,2,3},{4,5,6}};
+    static void testSystemArrayCopy() {
+        int[][] twoDimonArr = {{1, 2, 3}, {4, 5, 6}};
         int[][] dest = new int[2][3];
-        System.arraycopy(twoDimonArr,0,dest,0,twoDimonArr.length);
+        System.arraycopy(twoDimonArr, 0, dest, 0, twoDimonArr.length);
         System.out.println(dest);
-        Stream.of(dest).forEach(arr-> System.out.print(Arrays.toString(arr)));
+        Stream.of(dest).forEach(arr -> System.out.print(Arrays.toString(arr)));
         System.out.println();
         twoDimonArr[0][0] = -1;
-        Stream.of(dest).forEach(arr-> System.out.print(Arrays.toString(arr)));
+        Stream.of(dest).forEach(arr -> System.out.print(Arrays.toString(arr)));
     }
 
     static class Book {
@@ -79,8 +77,7 @@ public class Demo {
     /**
      * 测试享元模式
      */
-    @Test
-    public void test1(){
+    public void test1() {
         Integer i = 1;
         Integer i1 = 1;
         Integer i2 = new Integer(1);//创建了对象,没有使用常量池
@@ -90,8 +87,8 @@ public class Demo {
         i1 = 200;
         System.out.println(i == i1);
     }
-    @Test
-    public void test2(){
+
+    public void test2() {
         String str1 = "通话";
         String str2 = "重地";
         HashSet<String> set = new HashSet<>();
@@ -99,13 +96,13 @@ public class Demo {
         set.add(str2);
 
         HashMap<Object, Object> map = new HashMap<>();
-        map.put(null,"1");
-        map.put(str1,1);
-        map.put(str2,2);
+        map.put(null, "1");
+        map.put(str1, 1);
+        map.put(str2, 2);
         System.out.println(map);
     }
-    @Test
-    public void test3(){
+
+    public void test3() {
         Thread thread = new Thread();
         thread.start();
         thread.run();

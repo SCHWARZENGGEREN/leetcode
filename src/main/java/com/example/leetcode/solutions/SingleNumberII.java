@@ -41,7 +41,7 @@ public class SingleNumberII {
 //        System.out.println(Integer.parseUnsignedInt(Integer.toBinaryString(1)));
 //        System.out.println(Integer.parseUnsignedInt(Integer.toBinaryString(-1)));
         System.out.println(Integer.parseUnsignedInt(Integer.toBinaryString(Integer.MAX_VALUE)));
-//        System.out.println(Integer.parseUnsignedInt(Integer.toBinaryString(Integer.MIN_VALUE)));
+        System.out.println(Integer.parseUnsignedInt(Integer.toBinaryString(Integer.MIN_VALUE)));
     }
 
     /**
