@@ -34,7 +34,9 @@ public class RangeSumOfBst {
 
     public static void main(String[] args) {
         Integer[] nums = {
-                10,5,15,3,7,null,18
+                10,
+                5,15,
+                3,7,null,18
         };
 
         TreeNode treeNode = TreeNode.buildTreeNode(nums);

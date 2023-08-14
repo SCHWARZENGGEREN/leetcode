@@ -3,10 +3,7 @@ package com.example.leetcode.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -44,23 +41,26 @@ public class StringUtil {
         System.out.println("  end: " + System.currentTimeMillis());
     }
 
+    private static final List<String> ROMAN_NUMS = Arrays.asList(
+            "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x"
+    );
+
     /**
      * 以连接符拆解字符并转换为驼峰
+     * 自动转为小写
      *
      * @param appendName
      * @param append
      * @return
      */
     public static String getHumpName(String appendName, String append) {
-        String[] split = appendName.split(append);
+        String[] split = appendName.toLowerCase().split(append);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < split.length; i++) {
             String subStr = split[i];
             if (subStr != null && subStr.length() > 0) {
                 if (i == split.length - 1
-                        && (StringUtils.equals(subStr, "i") ||
-                        StringUtils.equals(subStr, "ii") ||
-                        StringUtils.equals(subStr, "iii"))) {
+                        && ROMAN_NUMS.contains(subStr)) {
                     sb.append(subStr.toUpperCase());
                 } else {
                     sb.append(subStr.replaceFirst(String.valueOf(subStr.charAt(0)), String.valueOf(subStr.charAt(0)).toUpperCase()));
@@ -90,7 +90,15 @@ public class StringUtil {
         String append = "-";
         String hump = "merge-two-binary-trees";
         System.out.println(getHumpName(hump, append));
-        getAllLetters();
+//        getAllLetters();
+
+        System.out.println(unicode(hump));
+
+        System.out.println(
+                requestLog2Json(
+                        "status=0, scene=0, applyId=null, goodsId=null, productId=1892, goodsName=活动促销白萝卜, goodsDescription=活动商品萝卜, goodsIllustrate=null, goodsSpecification=约500kg, goodsImage=https://c2c-test.oss-cn-shanghai.aliyuncs.com/uftp/2021_12_02/c0ab527a77f94733b637b853db5e295e.jpg, goodsHomeImage=null, typeId=null, costPrice=1, originalPrice=null, currentPrice=null, suggestPrice=1, expireTime=null, expirationDate=null, pruductDate=null, pruductAddress=null, serviceCharge=null, purchaseLimit=-1, goodsImageDetails=[https://c2c-test.oss-cn-shanghai.aliyuncs.com/uftp/2021_12_02/2664227a106e4075964d223114435738.jpg], stock=-1, anyUpd=false, onShelf=false, secondTypeId=16, firstTypeId=3, groupId=null, groupName=null, groupDescription=null, callService=0, supplierGoodsStatus=null"
+                )
+        );
     }
 
     public static String getRandomStr(int size) {
@@ -130,6 +138,21 @@ public class StringUtil {
         return sb.append(unicode.substring(pos)).toString();
     }
 
+    public static String unicode(String string) {
+        if (string == null || "".equals(string)) {
+            return null;
+        }
+        String hex;
+        StringBuilder sb = new StringBuilder();
+        for (char c : string.toCharArray()) {
+            hex = Integer.toHexString((int) c);
+            sb.append("\\u")
+                    .append(getDuplicateStr(4 - hex.length(), "0"))
+                    .append(hex);
+        }
+        return sb.toString();
+    }
+
     /**
      * 打印所有字母
      */
@@ -152,6 +175,33 @@ public class StringUtil {
                         .collect(
                                 Collectors.joining("\',\'", "\'", "\'")
                         ));
+    }
+
+    /**
+     * @return
+     */
+    public static String requestLog2Json(String requestLog){
+        String[] split = requestLog.split(", ");
+        StringBuilder sb =new StringBuilder("{");
+        for (String s : split) {
+            String[] split1 = s.split("=");
+            sb.append("\"")
+                    .append(split1[0])
+                    .append("\"")
+                    .append(":");
+
+            if (!isNumric(split1[1])){
+                sb.append("\"");
+            }
+            sb.append(split1[1]);
+            if (!isNumric(split1[1])){
+                sb.append("\"");
+            }
+            sb.append(",");
+        }
+        return sb
+                .replace(sb.length()-1,sb.length(),"}")
+                .toString();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.leetcode.solutions;
 
+import com.example.leetcode.common.anno.Score;
 import com.example.leetcode.common.anno.Unsettled;
 
 import java.util.Stack;
@@ -31,61 +32,73 @@ public class ImplementStrstr {
     public static void main(String[] args) {
         String haystack = "mississippi";
         String needle = "issip";
+
+//        haystack = "abc";
+//        needle = "c";
+//
+//        haystack = "abcd";
+//        needle = "cd";
         System.out.println(strStr(haystack, needle));
 
     }
 
     /**
-     * 使用Stack
      * TODO KMP
+     *
      * @param haystack
      * @param needle
      * @return
      */
     @Unsettled
-    public static int strStr(String haystack, String needle) {
-        if (haystack != null && needle != null && haystack.length() >= needle.length()) {
-            if (haystack.equals(needle)) return 0;
-            return haystack.indexOf(needle);
-//            Stack<Character> stack = new Stack<>();
-//            int[] pos = new int[1];
-//            for (int i = needle.length() - 1; i >= 0; i--) {
-//                stack.push(needle.charAt(i));
-//            }
-//            int i = 0;
-//            while (i < haystack.length()) {
-//                pos[0] = i;
-//                if (checkAppear(haystack, pos, stack)) {
-//                    return pos[0] - needle.length();
-//                } else {
-//                    i = pos[0];
-//                }
-//            }
+    public static int strStr1(String haystack, String needle) {
+        int n = haystack.length(), m = needle.length();
+        char[] s = haystack.toCharArray(), p = needle.toCharArray();
+        // 枚举原串的「发起点」
+        for (int i = 0; i <= n - m; i++) {
+            // 从原串的「发起点」和匹配串的「首位」开始，尝试匹配
+            int a = i, b = 0;
+            while (b < m && s[a] == p[b]) {
+                a++;
+                b++;
+            }
+            // 如果能够完全匹配，返回原串的「发起点」下标
+            if (b == m) return i;
         }
         return -1;
     }
 
     /**
-     * 匹配并计算指针位置
-     * TODO 如何确定新的起点??????
      * @param haystack
-     * @param pos
-     * @param needleStack
+     * @param needle
      * @return
      */
-    private static boolean checkAppear(String haystack, int[] pos, Stack<Character> needleStack) {
-        if (needleStack.empty()) return true;
-        if (haystack.length() - 1 >= pos[0]) {
-            Character peek = needleStack.peek();
-            if (haystack.charAt(pos[0]) == peek) {
-                pos[0] = pos[0] + 1;
-                needleStack.pop();
-                if (checkAppear(haystack, pos, needleStack)) {
-                    return true;
+    @Score(time = Score.S.OT, memory = Score.S.NONE)
+    public static int strStr(String haystack, String needle) {
+        if ("".equals(needle)) return 0;
+        int needleL = needle.length(), haystackL = haystack.length(), minSubLen = 0;
+        if (haystackL >= needleL) {
+            //每个点遍历,累计每个点子串重合度
+            int[] subStrLens = new int[haystackL];
+            char firstN = needle.charAt(0);
+            for (int i = 0; i < haystackL; i++) {
+                if (haystack.charAt(i) == firstN)
+                    if (needleL == (subStrLens[i] = 1)) return i;
+                //剪枝
+                if (minSubLen > (haystackL - 1 - i)) break;
+                for (int j = Math.max(0, i - needleL + 1); j < i; j++) {
+                    if (subStrLens[j] > 0) {
+                        //判断子串
+                        if (haystack.charAt(i) == needle.charAt(i - j)) {
+                            if (++subStrLens[j] == needleL) return j;
+                        } else {
+                            subStrLens[j] = 0;
+                        }
+                    }
+                    minSubLen = Math.min(minSubLen, needleL - subStrLens[j]);
                 }
-                needleStack.push(peek);
             }
         }
-        return false;
+        return -1;
     }
+
 }

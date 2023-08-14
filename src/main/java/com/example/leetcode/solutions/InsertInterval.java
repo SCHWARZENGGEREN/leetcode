@@ -2,7 +2,9 @@ package com.example.leetcode.solutions;
 
 import com.example.leetcode.common.anno.Unsettled;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Auther: Rxh
@@ -56,6 +58,7 @@ public class InsertInterval {
             System.out.print(Arrays.toString(interval));
             System.out.print(',');
         }
+        List<int[]> list;
     }
 
     /**
@@ -112,30 +115,41 @@ public class InsertInterval {
      * @param newInterval
      * @return
      */
-    @Unsettled
     public static int[][] insert1(int[][] intervals, int[] newInterval) {
-        int len = intervals.length,
-                left = newInterval[0],
-                right = newInterval[1],
-                insertL = -1,//左侧插入点偏左
-                insertR = len;//右侧插入点偏右
-        for (int i = 0; i < len; i++) {
-            if (insertL == -1) {
-                //左侧插入点
-                if (left <= intervals[i][1]) {
-                    insertL = i;
+        int left = 0, right = intervals.length;
+        List<int[]> arrayList = new ArrayList<>();
+        boolean add = false, meraging = false;
+        if (left < right) {
+            while (left <= right) {
+                if (add) {
+                    arrayList.add(intervals[left]);
+                } else {
+                    if (newInterval[1] < intervals[left][0]) {
+                        //左 不管是否合并,都添加newInt
+                        arrayList.add(Math.max(left - 1, 0), newInterval);
+                        add = true;
+                        meraging = false;
+                    } else if (newInterval[0] > intervals[left][1]) {
+                        //右
+                        if (!meraging) arrayList.add(intervals[left]);
+                    } else {
+                        //有交集,开始合并
+                        if (!meraging) {
+                            newInterval[0] = Math.min(newInterval[0], intervals[left][0]);//取左边界
+                            meraging = true;
+                        } else {
+                            //合并中
+                        }
+                    }
                 }
-            }
-            if (insertR == len) {
-                //右侧插入点
-                if (right >= intervals[i][0]) {
-                    insertR = i;
-                }
-            }
-        }
-        int finalLen = len;
-        int[][] res = new int[finalLen][2];
 
-        return null;
+                left++;
+            }
+
+
+        }
+        if (!add) arrayList.add(newInterval);
+
+        return (int[][]) arrayList.toArray();
     }
 }

@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Score {
     S time();
@@ -17,9 +17,21 @@ public @interface Score {
      * S:75-90
      * A:50-75
      * B:25-50
-     * C:0-25
+     * C:10-25
+     * D:0-10
+     *
+     *
+     * [2021-11-4]
+     * SSS:99-100
+     * SS:90-99
+     * S:80-90
+     * A:60-80
+     * B:40-60
+     * C:20-40
+     * D:0-20
      */
-    enum S{
+
+    enum S {
         SSS,
         SS,
         S,

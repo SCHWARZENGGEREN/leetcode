@@ -6,7 +6,9 @@ import java.util.List;
 /**
  * @Auther: Rxh
  * @Date: 2021/4/27 14:26
- * @Description: 字典树(TrieTree)，又称单词查找树或键树，是一种树形结构，是一种哈希树的变种。典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是：最大限度地减少无谓的字符串比较，查询效率比哈希表高。
+ * @Description: 字典树(TrieTree)，又称单词查找树或键树，是一种树形结构，是一种哈希树的变种。
+ * 典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。
+ * 它的优点是：最大限度地减少无谓的字符串比较，查询效率比哈希表高。
  * Trie的核心思想是空间换时间。利用字符串的公共前缀来降低查询时间的开销以达到提高效率的目的。
  * <p>
  * 它有3个基本性质：
@@ -41,9 +43,13 @@ public class TrieTree {
         TrieNode temp = root;
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
-            TrieNode node = temp.children[ch - 'a'];//ch仅仅起到定位作用
+            int idx = ch - 'a';
+            //全部小写
+            if (idx < 0)
+                idx += 32;
+            TrieNode node = temp.children[idx];//ch仅仅起到定位作用
             if (node == null) {
-                temp.children[ch - 'a'] = (node = new TrieNode());
+                temp.children[idx] = (node = new TrieNode());
             }
             node.prefixCount++;
 
@@ -95,33 +101,54 @@ public class TrieTree {
     public List<String> listRecommends(String input, int limit) {
         TrieNode node = searchNode(input);
         List<String> recommends = new ArrayList<>();
-        if (null != node) {
-            searchRecommends(node, 0, limit - input.length(), new StringBuilder(input), recommends);
-        }
+        recallListRecommends(node, new StringBuilder(input), recommends, limit - input.length());
         return recommends;
+    }
+
+    public List<String> listAll(){
+        TrieNode current;
+        TrieNode[] children = root.children;
+        List<String> allWords = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0;i<LETTERS.length;i++){
+            current = children[i];
+            if (current != null){
+                sb.setLength(0);
+                sb.append(LETTERS[i]);
+                recallListRecommends(current,sb,allWords,999);
+
+                //换行处理
+                if (!allWords.isEmpty()){
+                    allWords.set(
+                            allWords.size()-1,
+                            allWords.get(allWords.size()-1)+"\r\n"
+                    );
+                }
+            }
+        }
+        return allWords;
     }
 
     /**
      * 回溯找出所有
-     *
+     * 先保存:搜索当前节点之前已经获取当前节点对应字母
      * @param currentNode
-     * @param currentIdx
      * @param builder
      * @param recommends
+     * @param depth
      */
-    public void searchRecommends(TrieNode currentNode, int currentIdx, int depth, StringBuilder builder, List<String> recommends) {
+    public void recallListRecommends(TrieNode currentNode, StringBuilder builder, List<String> recommends, int depth) {
         if (currentNode == null) return;
-        builder.append(LETTERS[currentIdx]);
-        if (currentNode.isLeaf) {//到叶子节点或者深度到底
+        if (currentNode.isLeaf)
             recommends.add(builder.toString());
-//            return;
-        }
-        if (currentNode.children != null)
+        if (currentNode.children != null && depth > 0)
             for (int i = 0; i < currentNode.children.length; i++)
-                if (currentNode.children[i] != null)
-                    searchRecommends(currentNode.children[i], i, depth - 1, builder, recommends);
-
-        builder.setLength(builder.length() - 1);//移除
+                if (currentNode.children[i] != null) {
+                    builder.append(LETTERS[i]);
+                    recallListRecommends(currentNode.children[i], builder, recommends, depth - 1);
+                    builder.setLength(builder.length() - 1);//回溯
+                }
     }
 
 

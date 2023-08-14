@@ -1,6 +1,11 @@
 package com.example.leetcode.solutions;
 
+import com.example.leetcode.common.anno.Score;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: Rxh
@@ -24,9 +29,14 @@ import java.util.List;
  * words = ["word","good","best","word"]
  * 输出：[]
  * <p>
- * 来源：力扣（LeetCode）
- * 链接：https://leetcode-cn.com/problems/substring-with-concatenation-of-all-words
- * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ * <p>
+ * 提示：
+ * <p>
+ * 1 <= s.length <= 10^4
+ * s 由小写英文字母组成
+ * 1 <= words.length <= 5000
+ * 1 <= words[i].length <= 30
+ * words[i] 由小写英文字母组成
  */
 public class SubstringWithConcatenationOfAllWords {
 
@@ -37,8 +47,58 @@ public class SubstringWithConcatenationOfAllWords {
         System.out.println(findSubstring(s, words));
     }
 
+    /**
+     * 由于子串顺序不定,因此使用每个子串出现次数判断,先确定每个子串出现次数,
+     * 然后遍历母串,统计每个子串出现频次,如果出现了未知子串,或者某个子串出现次数>统计次数,就跳过;否则就保存遍历起始点
+     *
+     * @param s
+     * @param words
+     * @return
+     */
+    @Score(time = Score.S.A, memory = Score.S.S)
     public static List<Integer> findSubstring(String s, String[] words) {
+        int n = s.length(), count = words.length, m = words[0].length();
+        List<Integer> res = new ArrayList<>();
+        if (n >= m * count) {
+            Map<String, Integer> wordsMap = new HashMap<>(), statisticMap = new HashMap<>();
 
-        return null;
+            for (String word : words) {
+                Integer wordCount = wordsMap.getOrDefault(word, 0);
+                wordsMap.put(word, wordCount + 1);
+            }
+
+            int j;
+            for (int i = 0; i <= (n - count * m); i++) {
+                statisticMap.clear();
+                for (j = i; j < i + count * m; j += m) {
+                    String subStr = s.substring(j, j + m);
+                    Integer subStrCount = wordsMap.getOrDefault(subStr, 0);
+
+                    Integer statistiCount = statisticMap.getOrDefault(subStr, 0);
+                    statisticMap.put(subStr, ++statistiCount);
+
+                    if (statistiCount > subStrCount) break;
+                }
+                if (j == i + count * m) res.add(i);//'寿终正寝'
+            }
+        }
+        return res;
+    }
+
+    /**
+     * TODO 优化:
+     * 扫描母串以3n+i为单位,每次前进一个子串的长度,在map中移除旧串并添加新串
+     * @param s
+     * @param words
+     * @return
+     */
+    public static List<Integer> findSubstring1(String s, String[] words) {
+        int n = s.length(), count = words.length, m = words[0].length();
+        List<Integer> res = new ArrayList<>();
+        if (n >= m * count) {
+
+        }
+
+        return res;
     }
 }

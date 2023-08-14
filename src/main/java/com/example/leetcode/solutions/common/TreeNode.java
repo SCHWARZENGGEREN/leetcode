@@ -37,7 +37,7 @@ public class TreeNode {
      */
     public static TreeNode buildTreeNode(Integer[] nums) {
         List<TreeNode> lastLevels = new ArrayList<>(), currentLevels = new ArrayList<>();
-        TreeNode root = new TreeNode(nums[0]), temp = null;
+        TreeNode root = new TreeNode(nums[0]);
         lastLevels.add(root);
         int fIdx = 0;
         boolean left = true;
@@ -70,10 +70,10 @@ public class TreeNode {
     }
 
     /**
-     * 以root-left-right-level遍历tree并打印
+     * 以root-left-right遍历tree并打印
      * TODO 优化
      */
-    public static void printTreeNodeByRLRL(TreeNode treeNode) {
+    public static void printTreeNodeByRLR(TreeNode treeNode) {
         List<TreeNode> lastLevels = new ArrayList<>(), currentLevels = new ArrayList<>();
         lastLevels.add(treeNode);
 

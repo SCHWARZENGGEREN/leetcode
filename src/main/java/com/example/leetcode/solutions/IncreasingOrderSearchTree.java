@@ -44,11 +44,11 @@ public class IncreasingOrderSearchTree {
                 null, null, 3
         };
         TreeNode treeNode = TreeNode.buildTreeNode(nums1);
-        TreeNode.printTreeNodeByRLRL(increasingBST(treeNode));
+        TreeNode.printTreeNodeByRLR(increasingBST(treeNode));
     }
 
     /**
-     * 把无需的树按照递增顺序排列
+     * 把无序的树按照递增顺序排列
      * 遍历树,如果左侧有节点,则将做子节点与根节点值互换,
      *
      * TODO 优化
