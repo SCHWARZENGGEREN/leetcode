@@ -88,7 +88,7 @@ public class StringUtil {
 
     public static void main(String[] args) {
         String append = "-";
-        String hump = "flower-planting-with-no-adjacent";
+        String hump = "merge-two-binary-trees";
         System.out.println(getHumpName(hump, append));
         getAllLetters();
     }

@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Score {
     S time();
-    S memory();
+    S memory() default S.NONE;
 
     /**
      * SSS:99-100

@@ -42,8 +42,7 @@ public class SumOfSquareNumbers {
 
 
     public static void main(String[] args) {
-//        Util.judgeInvokeTime(object -> System.out.println(judgeSquareSum(11108890)));
-        Util.judgeInvokeTime(object -> System.out.println(judgeSquareSum1(3)));
+        Util.calcInvokeTime(o -> judgeSquareSum1(3));
     }
 
     /**

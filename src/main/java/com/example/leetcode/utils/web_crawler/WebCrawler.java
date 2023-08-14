@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  */
 public class WebCrawler {
 
-    private static final String SAVE_PATH = "E:\\MyDownloads\\pictures\\";
+    private static final String SAVE_PATH = "D:\\download\\crawler";
     private static final String IMAGE_PATTERN = "src=\"(.+?)\"";
     private static final String DEFAULT_FORMAT = ".jpg";
     private static final String IMAGE_FORMATS = ",BMP,JPG,JPEG,GIF,PNG,WEBP,bmp,jpg,jpeg,gif,png,webp,";
@@ -28,15 +28,7 @@ public class WebCrawler {
     public static void main(String[] args) throws Exception {
         //定义即将访问的链接
         String url = "https://tieba.baidu.com/p/6435170603?see_lz=1";
-        url = "https://www.zhihu.com/question/23524899/answer/377155367";
-        url = "https://tieba.baidu.com/p/5652915506?see_lz=1";
-        url = "https://tieba.baidu.com/p/6935150237";
-
-        WebCrawler crawler = new WebCrawler();
-
-//        crawler.getWebHtml("http://tieba.baidu.com/photo/p?kw=%E5%B4%A9%E5%9D%8F3rd&flux=1&tid=6435170603&pic_id=ba4686b0cb13495490ebdf1e414e9258d0094a69&pn=1&fp=2&see_lz=1&red_tag=i1866022272");
-//        crawler.downloadPic("http://tieba.baidu.com/photo/p?kw=%E5%B4%A9%E5%9D%8F3rd&flux=1&tid=6435170603&pic_id=ba4686b0cb13495490ebdf1e414e9258d0094a69&pn=1&fp=2&see_lz=1&red_tag=i1866022272",crawler.getParentPath(null));
-        crawler.start(url);
+        new WebCrawler().start(url);
 
         System.exit(0);
     }

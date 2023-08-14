@@ -1,56 +1,49 @@
 package com.example.leetcode.solutions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Auther: Rxh
  * @Date: 2019/8/21 10:09
- * @Description:
+ * @Description: 1. 两数之和
+ * 给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。
+ * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
+ * 你可以按任意顺序返回答案。
+ *
+ * 示例 1：
+ * 输入：nums = [2,7,11,15], target = 9
+ * 输出：[0,1]
+ * 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
+ *
+ *  示例 2：
+ * 输入：nums = [3,2,4], target = 6
+ * 输出：[1,2]
+ *
+ * 示例 3：
+ * 输入：nums = [3,3], target = 6
+ * 输出：[0,1]
+ *
+ * 提示：
+ * 2 <= nums.length <= 10^4
+ * -10^9 <= nums[i] <= 10^9
+ * -10^9 <= target <= 10^9
+ * 只会存在一个有效答案
  */
 public class TwoSum {
 
     public static void main(String[] args) {
+        int[] nums = {2,7,11,15};
+        int target = 9;
 
+        System.out.println(Arrays.toString(twoSum1(nums, target)));
     }
 
     /**
-     * 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+     * 方式1,暴力破解
+     * @param nums
+     * @param target
+     * @return
      */
-    private static int[] twoSum(int[] nums, int target) {
-        //使用减法
-        StringBuilder num1Idxs = new StringBuilder(",");//记录角标
-        StringBuilder num2s = new StringBuilder(",");//记录目标数字
-        int[] res = new int[2];
-
-
-        for (int i = 0; i < nums.length; i++) {
-            int n = nums[i];
-            if (num2s.indexOf("," + n + ",") >= 0) {
-                String[] split1 = num2s.toString().split(",");
-                int targetIdx = 0;
-                for (int j = 0; j < split1.length; j++) {
-                    if (String.valueOf(n).equals(split1[j])) {
-                        targetIdx = j;
-                        res[1] = i;
-                        break;
-                    }
-                }
-                res[0] = Integer.valueOf(num1Idxs.toString().split(",")[targetIdx]);
-
-            } else {
-                num1Idxs.append(i).append(",");
-                num2s.append(target - n).append(",");
-            }
-        }
-
-//        System.out.println(res[0]);
-//        System.out.println(res[1]);
-        return res;
-    }
-
     private static int[] twoSum1(int[] nums, int target) {
         int[] res = new int[2];
 
@@ -64,10 +57,6 @@ public class TwoSum {
                 }
             }
         }
-
-
-//        System.out.println(res[0]);
-//        System.out.println(res[1]);
         return res;
     }
     private static int[] twoSum3(int[] nums, int target) {

@@ -3,7 +3,9 @@ package com.example.leetcode.solutions;
 import com.example.leetcode.common.anno.Score;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author renxinheng
@@ -48,6 +50,34 @@ public class FlowerPlantingWithNoAdjacent {
 
         int[][] paths = {{1,2},{2,3}};
         System.out.println(Arrays.toString(gardenNoAdj(n, paths)));
+    }
+
+    private static void readXml2Json(){
+        List<String> xmls = readXmlFromLoaclFiles();
+        List<String> jsons = new ArrayList<>();
+        for (String xml : xmls) {
+            jsons.add(ParseXmlUtils.parse(xml));
+        }
+
+        System.out.println(jsons);
+        String path = "xxx";//输出的文件路径
+        writeJson(jsons,path);
+    }
+
+    //todo io写到本地
+    private static void writeJson(List<String> jsons, String path) {
+
+    }
+
+    private static List<String> readXmlFromLoaclFiles() {
+        return null;//todo 读取本地文件
+    }
+
+    static class ParseXmlUtils{
+        public static String parse(String xml){
+
+            return null;//todo 转换工具
+        }
     }
 
     /**

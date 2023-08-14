@@ -12,6 +12,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Auther: Rxh
@@ -139,5 +143,52 @@ public class Util {
 //        System.out.println(MD5("123456"));
         int[] height = {4, 10, 7, 5, 8, 6, 3};
         printColumnChart(height);
+
+        int[][][] triple = {
+                {
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                },
+                {
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                },
+                {
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                        {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                }
+        };
+//        printTripleArray(triple);
+    }
+
+    public static <T> void printMultiArray(T[][] array) {
+        Stream.of(array).forEach(arr -> System.out.println(
+                Stream.of(arr)
+                        .map(String::valueOf)
+                        .collect(Collectors.joining(","))
+        ));
+    }
+
+    public static <T> void printTripleArray(T[][][] array) {
+        Stream.of(array).forEach(arr0 -> {
+            Stream.of(arr0).forEach(arr1 -> {
+                System.out.println(
+                        Stream.of(arr1)
+                                .map(String::valueOf)
+                                .collect(Collectors.joining(","))
+                );
+            });
+        });
+    }
+
+    public static <T, R> void calcInvokeTime(Function<T, R> function) {
+        long start = System.currentTimeMillis();
+        R result = function.apply(null);
+
+        System.out.println("执行结果: "+ result);
+        System.out.println("执行耗时: " + (System.currentTimeMillis() - start));
     }
 }
