@@ -43,7 +43,17 @@ public class ImplementStrstr {
     }
 
     /**
-     * TODO KMP
+     * 暴力算法:遍历母串和子串,只要不匹配,就将母串的角标后移一位,时间复杂度是O(m*n),
+     * 那么可以优化的点就是子串与母串不匹配时母串角标该前进多少步
+     * KMP:
+     * 1,最长相同前后缀概念:在任意一个子串中计算出最长的前后缀:
+     *  如 abcdab,前缀的集合：{a,ab,abc,abcd,abcda}
+     *            后缀的集合：{b,ab,dab,cdab,bcdab},
+     *            那么最长的相同前后缀就是ab,记录每个角标前面的字符的最长相同前后缀长度可以得到
+     *  next:{-1(前面没有字符),0(单个字符没有前后缀),0,0,1(a),2(ab)}
+     * 2,那么子串在与母串的任意一个子串匹配(起始角标i,长度n)时,当前匹配的角标为j,只要下一个字符不匹配,
+     * 就将母串角标后移n-next[j+1]位,即将i更新为j-next[j],也就是说,提前算好每个位置的最长前后缀,用空间换时间
+     *
      *
      * @param haystack
      * @param needle
@@ -65,6 +75,28 @@ public class ImplementStrstr {
             if (b == m) return i;
         }
         return -1;
+    }
+
+    /**
+     * 暴力算法:遍历母串和子串,只要不匹配,就将母串的角标后移一位,时间复杂度是O(m*n),
+     * 那么可以优化的点就是子串与母串不匹配时母串角标该前进多少步
+     * KMP:
+     * 1,最长相同前后缀概念:在任意一个子串中计算出最长的前后缀:
+     *  如 abcdab,前缀的集合：{a,ab,abc,abcd,abcda}
+     *            后缀的集合：{b,ab,dab,cdab,bcdab},
+     *            那么最长的相同前后缀就是ab,记录每个角标前面的字符的最长相同前后缀长度可以得到
+     *  next:{-1(前面没有字符),0(单个字符没有前后缀),0,0,1(a),2(ab)}
+     * 2,那么子串在与母串的任意一个子串匹配(起始角标i,长度n)时,当前匹配的角标为j,只要下一个字符不匹配,
+     * 就将母串角标后移n-next[j+1]位,即将i更新为j-next[j],也就是说,提前算好每个位置的最长前后缀,用空间换时间
+     *
+     *
+     * @param haystack
+     * @param needle
+     * @return
+     */
+    public static int kmp(String haystack, String needle) {
+        int m = haystack.length(), n = needle.length();
+        return 0;
     }
 
     /**
@@ -100,5 +132,4 @@ public class ImplementStrstr {
         }
         return -1;
     }
-
 }

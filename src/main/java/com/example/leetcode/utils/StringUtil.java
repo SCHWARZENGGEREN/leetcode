@@ -88,7 +88,7 @@ public class StringUtil {
 
     public static void main(String[] args) {
         String append = "-";
-        String hump = "merge-two-binary-trees";
+        String hump = "minimum-number-of-frogs-croaking";
         System.out.println(getHumpName(hump, append));
 //        getAllLetters();
 

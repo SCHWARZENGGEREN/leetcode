@@ -34,7 +34,7 @@ public class MergeTwoBinaryTrees {
         TreeNode tree1 = TreeNode.buildTreeNode(new Integer[]{1, 3, 2, 5});
         TreeNode tree2 = TreeNode.buildTreeNode(new Integer[]{2, 1, 3, null, 4, null, 7});
         tree1 = null;
-        TreeNode.printTreeNodeByRLRL(mergeTrees(tree1, tree2));
+        TreeNode.printTreeNodeByRLR(mergeTrees(tree1, tree2));
     }
 
     /**
