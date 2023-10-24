@@ -1,9 +1,8 @@
 package com.example.leetcode.solutions;
 
-import com.example.leetcode.common.anno.Unsettled;
+import com.example.leetcode.utils.ArrayUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,14 +12,14 @@ import java.util.List;
  * 给你一个 无重叠的 ，按照区间起始端点排序的区间列表。
  * 在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠（如果有必要的话，可以合并区间）。
  * <p>
- * 示例 1：
+ * 示例1：
  * 输入：intervals = [[1,3],[6,9]], newInterval = [2,5]
  * 输出：[[1,5],[6,9]]
  * <p>
  * 示例 2：
  * 输入：intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
  * 输出：[[1,2],[3,10],[12,16]]
- * 解释：这是因为新的区间 [4,8] 与 [3,5],[6,7],[8,10] 重叠。
+ * 解释：这是因为新的区间 [4,8] 与 [3,5],[6,7],[8,10]重叠。
  * <p>
  * 示例 3：
  * 输入：intervals = [], newInterval = [5,7]
@@ -33,15 +32,15 @@ import java.util.List;
  * 示例 5：
  * 输入：intervals = [[1,5]], newInterval = [2,7]
  * 输出：[[1,7]]
- *  
+ *
  * <p>
  * 提示：
  * 0 <= intervals.length <= 10^4
  * intervals[i].length == 2
- * 0 <= intervals[i][0] <= intervals[i][1] <= 10^5
+ * 0 <=intervals[i][0] <=intervals[i][1] <= 10^5
  * intervals 根据 intervals[i][0] 按 升序 排列
  * newInterval.length == 2
- * 0 <= newInterval[0] <= newInterval[1] <= 10^5
+ * 0 <=newInterval[0] <=newInterval[1] <= 10^5
  * <p>
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/insert-interval
@@ -54,102 +53,61 @@ public class InsertInterval {
         int[] newInterval = {4, 8};
 
         int[][] newIntervals = insert(intervals, newInterval);
-        for (int[] interval : newIntervals) {
-            System.out.print(Arrays.toString(interval));
-            System.out.print(',');
-        }
-        List<int[]> list;
+
+        ArrayUtil.printMultiArray(newIntervals);
     }
 
     /**
-     * 逐一判断
+     * 三种场景:
+     * 1,原区间在新区间左侧,并且无交集
+     *  1,没有"合并"起始角标,直接插入原区间左侧
+     *  2,有"合并"起始角标,
+     * 2,原区间在新区间右侧,并且无交集
+     *  继续遍历,直到出现1/3场景的区间
+     * 3,原区间与新区间有交集
+     *  3.1,如果新区间右侧不大于原区间右侧,直接"吃掉"并替换原区间即可;
+     *  3.2,如果新区间右侧大于原区间,标记原区间角标作为"合并"区间的起始
      *
      * @param intervals
      * @param newInterval
      * @return TODO
      */
     public static int[][] insert(int[][] intervals, int[] newInterval) {
-        int start = -1, end = intervals.length - 1, len = intervals.length;
-
-        for (int i = 0; i < intervals.length; i++) {
-            int[] interval = intervals[i];
-            //判断起点
-            if (newInterval[0] <= interval[1]) {
-                //左落在左
-                if (newInterval[0] > interval[0]) {
-                    newInterval[0] = interval[0];
-                }
-                start = i;
-            }
-            //判断终点
-            if (newInterval[1] < interval[0]) {
-                end = i;
-                break;
-            } else if (newInterval[1] <= interval[1]) {
-                //右落在右
-                newInterval[1] = interval[1];
-                end = i + 1;
-            }
-        }
-
-
-        int[][] res = new int[len][2];
-        for (int i = 0; i < len; i++) {
-            if (i == start) {
-                res[i] = newInterval;
-                i = end;
-            } else if (i < start) {
-                res[i] = intervals[i];
-            } else {
-                res[i] = intervals[i - (end - start)];
-            }
-        }
-        return res;
-    }
-
-
-    /**
-     * 遍历数组,分别找出插入数组左右点插入的位置
-     *
-     * @param intervals
-     * @param newInterval
-     * @return
-     */
-    public static int[][] insert1(int[][] intervals, int[] newInterval) {
-        int left = 0, right = intervals.length;
-        List<int[]> arrayList = new ArrayList<>();
-        boolean add = false, meraging = false;
-        if (left < right) {
-            while (left <= right) {
-                if (add) {
-                    arrayList.add(intervals[left]);
-                } else {
-                    if (newInterval[1] < intervals[left][0]) {
-                        //左 不管是否合并,都添加newInt
-                        arrayList.add(Math.max(left - 1, 0), newInterval);
-                        add = true;
-                        meraging = false;
-                    } else if (newInterval[0] > intervals[left][1]) {
-                        //右
-                        if (!meraging) arrayList.add(intervals[left]);
-                    } else {
-                        //有交集,开始合并
-                        if (!meraging) {
-                            newInterval[0] = Math.min(newInterval[0], intervals[left][0]);//取左边界
-                            meraging = true;
-                        } else {
-                            //合并中
-                        }
+        int length = intervals.length;
+        int insertIdx = -1;//插入区间标记点
+        int mergeStartIdx = -1;//合并区间起始点
+        int newLeft = newInterval[0];
+        int newRight = newInterval[1];
+        for (int i = 0; i < length; i++) {
+            int[] currInterval = intervals[i];
+            if ((newLeft >= currInterval[0] && newLeft <= currInterval[1]) ||
+                    newRight >= currInterval[0] && newRight <= currInterval[1]){
+                //1 有交集
+                if (mergeStartIdx >= 0){
+                    //开始合并了
+                }else {
+                    //没开始
+                    if (newLeft < currInterval[0]){
+                        currInterval[0] = newLeft;
                     }
+                    mergeStartIdx = i;
                 }
-
-                left++;
+            }else if (newRight < currInterval[0]){
+                //无交集 在左侧
+                if (i == 0){
+                    insertIdx = 0;
+                }
+            }else {
+                //无交集 在右侧
+                if (i == length-1){
+                    //插入
+                    insertIdx = length - 1;
+                }
             }
-
+        }
+        if (insertIdx > 0){
 
         }
-        if (!add) arrayList.add(newInterval);
-
-        return (int[][]) arrayList.toArray();
+        return intervals;
     }
 }

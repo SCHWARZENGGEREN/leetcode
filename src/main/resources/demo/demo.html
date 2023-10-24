@@ -1,0 +1,29 @@
+<html>
+<script >
+    //apifox脚本demo
+    var myDate=new Date();
+    var cvcheckInDate = formatDate(myDate,'yyyy-MM-dd');
+    myDate.setDate(myDate.getDate()+1);//日期后延一天,如果改月份年份 以此类推setMonth/setYear
+    var cvcheckOutDate = formatDate(myDate,'yyyy-MM-dd');
+    var cvlatestArrivalTime = cvcheckInDate + " 23:59:59"
+    pm.environment.set("cvcheckInDate",cvcheckInDate);
+    pm.environment.set("cvcheckOutDate",cvcheckOutDate);
+    pm.environment.set("cvlatestArrivalTime",cvlatestArrivalTime);
+    //日期格式化
+    function formatDate(date, format) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        format = format.replace("yyyy", year);
+        format = format.replace("MM", month < 10 ? "0" + month : month);
+        format = format.replace("dd", day < 10 ? "0" + day : day);
+        format = format.replace("HH", hour < 10 ? "0" + hour : hour);
+        format = format.replace("mm", minute < 10 ? "0" + minute : minute);
+        format = format.replace("ss", second < 10 ? "0" + second : second);
+        return format;
+    }
+</script>
+</html>

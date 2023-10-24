@@ -1,8 +1,13 @@
 package com.example.leetcode.utils;
 
+import com.example.leetcode.constants.CommonCsts;
+import com.example.leetcode.constants.SepConsts;
+import com.example.leetcode.imitate.Solution;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -87,17 +92,51 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        String append = "-";
-        String hump = "minimum-number-of-frogs-croaking";
-        System.out.println(getHumpName(hump, append));
+        String hump = "number-of-senior-citizens";
+        System.out.println(getHumpName(hump, SepConsts.MIDLINE));
+        String solutionName = "AvoidFloodInTheCity";
+        System.out.println(getLeetcodeUrl(solutionName));
 //        getAllLetters();
 
-        System.out.println(unicode(hump));
+//        System.out.println(unicode(hump));
 
-        System.out.println(
-                requestLog2Json(
-                        "status=0, scene=0, applyId=null, goodsId=null, productId=1892, goodsName=活动促销白萝卜, goodsDescription=活动商品萝卜, goodsIllustrate=null, goodsSpecification=约500kg, goodsImage=https://c2c-test.oss-cn-shanghai.aliyuncs.com/uftp/2021_12_02/c0ab527a77f94733b637b853db5e295e.jpg, goodsHomeImage=null, typeId=null, costPrice=1, originalPrice=null, currentPrice=null, suggestPrice=1, expireTime=null, expirationDate=null, pruductDate=null, pruductAddress=null, serviceCharge=null, purchaseLimit=-1, goodsImageDetails=[https://c2c-test.oss-cn-shanghai.aliyuncs.com/uftp/2021_12_02/2664227a106e4075964d223114435738.jpg], stock=-1, anyUpd=false, onShelf=false, secondTypeId=16, firstTypeId=3, groupId=null, groupName=null, groupDescription=null, callService=0, supplierGoodsStatus=null"
-                )
+//        String logParam = "";
+//        System.out.println(requestLog2Json(logParam));
+
+//        printDateDemo();
+    }
+
+    private static void printDateDemo() {
+        List<String> dates = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter dateDf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        int i = 90;
+
+        while (true){
+            String format = dateDf.format(now);
+            dates.add(String.format("\"%s\"",format));
+            if (format.equals("2023-12-04")){
+                break;
+            }
+            now = now.plusDays(1);
+        }
+        System.out.println(dates);
+    }
+
+    private static String getLeetcodeUrl(String solutionName) {
+        StringBuilder sb = new StringBuilder(solutionName);
+        int i = 1;
+        while (i < sb.length()){
+            if (isUpperWords(sb.charAt(i))){
+                sb.insert(i, SepConsts.MIDLINE);
+                i++;
+            }
+            i++;
+        }
+        return String.format(
+                "https://leetcode.cn/problems/%s/",
+                sb.toString().toLowerCase()
         );
     }
 
@@ -203,5 +242,14 @@ public class StringUtil {
                 .replace(sb.length()-1,sb.length(),"}")
                 .toString();
     }
+
+    public static boolean isUpperWords(char c){
+        return c >= CommonCsts.CHAR_A_UPPER && c<= CommonCsts.CHAR_Z_UPPER;
+    }
+
+    public static boolean isLowerWords(char c){
+        return c >= CommonCsts.CHAR_A_LOWER && c<= CommonCsts.CHAR_Z_LOWER;
+    }
+
 
 }

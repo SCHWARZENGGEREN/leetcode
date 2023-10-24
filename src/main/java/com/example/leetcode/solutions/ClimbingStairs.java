@@ -88,146 +88,55 @@ public class ClimbingStairs {
      * @return
      */
     @Tips(tip = "在实际情况中,像这种答案固定的问题直接将答案算好对系统来说是最优解")
-    @Score(time = Score.S.SSS, memory = Score.S.SSS)
+    @Score(time = Score.S.FULL, memory = Score.S.B)
     public static int climbStairs1(int n) {
-        int result = 0;
         switch (n) {
-            case 1:
-                result = 1;
-                break;
-            case 2:
-                result = 2;
-                break;
-            case 3:
-                result = 3;
-                break;
-            case 4:
-                result = 5;
-                break;
-            case 5:
-                result = 8;
-                break;
-            case 6:
-                result = 13;
-                break;
-            case 7:
-                result = 21;
-                break;
-            case 8:
-                result = 34;
-                break;
-            case 9:
-                result = 55;
-                break;
-            case 10:
-                result = 89;
-                break;
-            case 11:
-                result = 144;
-                break;
-            case 12:
-                result = 233;
-                break;
-            case 13:
-                result = 377;
-                break;
-            case 14:
-                result = 610;
-                break;
-            case 15:
-                result = 987;
-                break;
-            case 16:
-                result = 1597;
-                break;
-            case 17:
-                result = 2584;
-                break;
-            case 18:
-                result = 4181;
-                break;
-            case 19:
-                result = 6765;
-                break;
-            case 20:
-                result = 10946;
-                break;
-            case 21:
-                result = 17711;
-                break;
-            case 22:
-                result = 28657;
-                break;
-            case 23:
-                result = 46368;
-                break;
-            case 24:
-                result = 75025;
-                break;
-            case 25:
-                result = 121393;
-                break;
-            case 26:
-                result = 196418;
-                break;
-            case 27:
-                result = 317811;
-                break;
-            case 28:
-                result = 514229;
-                break;
-            case 29:
-                result = 832040;
-                break;
-            case 30:
-                result = 1346269;
-                break;
-            case 31:
-                result = 2178309;
-                break;
-            case 32:
-                result = 3524578;
-                break;
-            case 33:
-                result = 5702887;
-                break;
-            case 34:
-                result = 9227465;
-                break;
-            case 35:
-                result = 14930352;
-                break;
-            case 36:
-                result = 24157817;
-                break;
-            case 37:
-                result = 39088169;
-                break;
-            case 38:
-                result = 63245986;
-                break;
-            case 39:
-                result = 102334155;
-                break;
-            case 40:
-                result = 165580141;
-                break;
-            case 41:
-                result = 267914296;
-                break;
-            case 42:
-                result = 433494437;
-                break;
-            case 43:
-                result = 701408733;
-                break;
-            case 44:
-                result = 1134903170;
-                break;
-            case 45:
-                result = 1836311903;
-                break;
+            case 1:return  1;
+            case 2:return  2;
+            case 3:return  3;
+            case 4:return  5;
+            case 5:return  8;
+            case 6:return  13;
+            case 7:return  21;
+            case 8:return  34;
+            case 9:return  55;
+            case 10:return  89;
+            case 11:return  144;
+            case 12:return  233;
+            case 13:return  377;
+            case 14:return  610;
+            case 15:return  987;
+            case 16:return  1597;
+            case 17:return  2584;
+            case 18:return  4181;
+            case 19:return  6765;
+            case 20:return  10946;
+            case 21:return  17711;
+            case 22:return  28657;
+            case 23:return  46368;
+            case 24:return  75025;
+            case 25:return  121393;
+            case 26:return  196418;
+            case 27:return  317811;
+            case 28:return  514229;
+            case 29:return 832040;
+            case 30:return  1346269;
+            case 31:return  2178309;
+            case 32:return  3524578;
+            case 33:return  5702887;
+            case 34:return  9227465;
+            case 35:return  14930352;
+            case 36:return  24157817;
+            case 37:return  39088169;
+            case 38:return  63245986;
+            case 39:return  102334155;
+            case 40:return  165580141;
+            case 41:return  267914296;
+            case 42:return  433494437;
+            case 43:return  701408733;
+            case 44:return  1134903170;
+            case 45:return  1836311903;
         }
-        return result;
+        return 0;
     }
 }

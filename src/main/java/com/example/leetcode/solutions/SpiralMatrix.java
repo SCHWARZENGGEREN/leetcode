@@ -12,7 +12,7 @@ import java.util.List;
  * 给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
  * <p>
  * 示例 1:
- * <p>
+ * <image>/54_spiral1.jpg</image> /r/n
  * 输入:
  * [
  * [ 1, 2, 3 ],
@@ -49,6 +49,7 @@ public class SpiralMatrix {
                         {1, 2, 3, 4, 5, 6}
                 };
         System.out.println(spiralOrder(matrix1));
+        System.out.println(spiralOrder1(matrix1));
     }
 
     /**
@@ -110,5 +111,55 @@ public class SpiralMatrix {
             direct = direct % 4 + 1;
         }
         return result;
+    }
+
+    /**
+     * 螺旋矩阵2的思路,
+     * @return
+     */
+    @Score(time = Score.S.SSS,memory = Score.S.C)
+    public static List<Integer> spiralOrder1(int[][] matrix) {
+        List<Integer> res = new ArrayList<>();
+        int m = matrix.length, n = matrix[0].length;
+        char[][] matrixCopy = new char[m][n];//空间换时间
+        int x = 0, y = 0, ns = m * n;
+        while (res.size() < ns) {
+            // >
+            while (y < n && matrixCopy[x][y] == 0) {
+                matrixCopy[x][y] = ' ';
+                res.add(matrix[x][y]);
+                y++;
+            }
+            if (res.size() >= ns) break;
+            y--;//战术后撤步
+            x++;//战术转向
+            // V
+            while (x < m && matrixCopy[x][y] == 0) {
+                matrixCopy[x][y] = ' ';
+                res.add(matrix[x][y]);
+                x++;
+            }
+            if (res.size() >= ns) break;
+            x--;
+            y--;
+            // <
+            while (y >= 0 && matrixCopy[x][y] == 0) {
+                matrixCopy[x][y] = ' ';
+                res.add(matrix[x][y]);
+                y--;
+            }
+            if (res.size() >= ns) break;
+            y++;
+            x--;
+            //^
+            while (x >= 0 && matrixCopy[x][y] == 0) {
+                matrixCopy[x][y] = ' ';
+                res.add(matrix[x][y]);
+                x--;
+            }
+            x++;
+            y++;
+        }
+        return res;
     }
 }

@@ -45,8 +45,7 @@ public class TrieTree {
             char ch = str.charAt(i);
             int idx = ch - 'a';
             //全部小写
-            if (idx < 0)
-                idx += 32;
+            if (idx < 0) idx += 32;
             TrieNode node = temp.children[idx];//ch仅仅起到定位作用
             if (node == null) {
                 temp.children[idx] = (node = new TrieNode());

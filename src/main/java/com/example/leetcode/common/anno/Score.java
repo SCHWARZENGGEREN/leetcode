@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Score {
-    S time();
+    S[] time();
     S memory() default S.NONE;
 
     /**
@@ -22,7 +22,8 @@ public @interface Score {
      *
      *
      * [2021-11-4]
-     * SSS:99-100
+     * FULL:满昏!
+     * SSS:99-99.999
      * SS:90-99
      * S:80-90
      * A:60-80
@@ -32,6 +33,7 @@ public @interface Score {
      */
 
     enum S {
+        FULL,
         SSS,
         SS,
         S,
@@ -40,9 +42,10 @@ public @interface Score {
         C,
         D,
 
+        COPIED,//cv大法
+        UNSETTLED,//未解决
         NONE,//未通过
         OT,//over time 超时
         OOM,// out of memory 内存溢出
-        ;
     }
 }

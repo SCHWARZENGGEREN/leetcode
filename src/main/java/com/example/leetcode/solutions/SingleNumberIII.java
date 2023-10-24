@@ -24,13 +24,13 @@ public class SingleNumberIII {
         System.out.println(1 & 1);
         System.out.println(0 | 0);
         System.out.println(1 | 1);
+        System.out.println(1 & (-1));
 
 //        int[] ints = {2, 3, 1, 2, 3, 5};
 //        System.out.println(singleNumber(ints));
     }
 
     /**
-     * 使用位运算
      *
      * @param nums
      * @return
@@ -38,6 +38,8 @@ public class SingleNumberIII {
     public static int[] singleNumber(int[] nums) {
         int result = nums[0];
         int length = nums.length;
-        return new int[]{nums[0], nums[1]};
+        int[] res = new int[2];
+        //先位运算总值
+        return res;
     }
 }
