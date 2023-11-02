@@ -78,13 +78,4 @@ public class CrazyDave extends Player {
         if (opponent == Move.ROCK) return Move.PAPER;
         return Move.SCISSORS;
     }
-
-    public static final Pattern WHITE_LIST = Pattern.compile("^/([a-z0-9]+?)/(home|index|help|login|logout|logging|404|error|account/reset-self-password|auth-code|no-token/\\S+|cmp_sp/\\S+)?$");
-    public static void main(String[] args) {
-        List<String> strings = Arrays.asList("/booking/no-token/login/", "/schedulerplus/cmp_sp/dispatch", "/booking/no-token/login/", "/booking/no-token/login/", "/booking/city/list/");
-        for (String string : strings) {
-            Matcher matcher = WHITE_LIST.matcher(string);
-            System.out.println(string + "--" + matcher.matches());
-        }
-    }
 }

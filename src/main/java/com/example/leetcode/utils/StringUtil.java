@@ -2,7 +2,6 @@ package com.example.leetcode.utils;
 
 import com.example.leetcode.constants.CommonCsts;
 import com.example.leetcode.constants.SepConsts;
-import com.example.leetcode.imitate.Solution;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
  * @Description:
  */
 public class StringUtil {
+    public static final Pattern WHITE_LIST = Pattern.compile("^/([a-z0-9]+?)/(home|index|help|login|logout|logging|404|error|account/reset-self-password|auth-code|no-token/\\S+|cmp_sp/\\S+)?$");
     public static final String NUM_FORMAT = "[0-9]*";
 
     public static String getDuplicateStr(int count, String str) {
@@ -92,10 +92,9 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        String hump = "number-of-senior-citizens";
+        String hump = "rings-and-rods";
         System.out.println(getHumpName(hump, SepConsts.MIDLINE));
-        String solutionName = "AvoidFloodInTheCity";
-        System.out.println(getLeetcodeUrl(solutionName));
+        System.out.println(getLeetcodeUrl("MovePiecesToObtainAString"));
 //        getAllLetters();
 
 //        System.out.println(unicode(hump));
@@ -104,6 +103,18 @@ public class StringUtil {
 //        System.out.println(requestLog2Json(logParam));
 
 //        printDateDemo();
+
+        testRegex();
+    }
+
+    public static void testRegex() {
+        String regex = "^[0-9Xx]\\d{18}";
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
+        System.out.println(pattern.matcher("410726199110152419").matches());
+        System.out.println(pattern.matcher("41072619911015241X").matches());
+        System.out.println(pattern.matcher("41072619911015241S").matches());
+        System.out.println(pattern.matcher("4107261991101524191").matches());
+        System.out.println(pattern.matcher("4107261991101524x").matches());
     }
 
     private static void printDateDemo() {
@@ -113,10 +124,10 @@ public class StringUtil {
 
         int i = 90;
 
-        while (true){
+        while (true) {
             String format = dateDf.format(now);
-            dates.add(String.format("\"%s\"",format));
-            if (format.equals("2023-12-04")){
+            dates.add(String.format("\"%s\"", format));
+            if (format.equals("2023-12-04")) {
                 break;
             }
             now = now.plusDays(1);
@@ -127,8 +138,8 @@ public class StringUtil {
     private static String getLeetcodeUrl(String solutionName) {
         StringBuilder sb = new StringBuilder(solutionName);
         int i = 1;
-        while (i < sb.length()){
-            if (isUpperWords(sb.charAt(i))){
+        while (i < sb.length()) {
+            if (isUpperWords(sb.charAt(i))) {
                 sb.insert(i, SepConsts.MIDLINE);
                 i++;
             }
@@ -219,9 +230,9 @@ public class StringUtil {
     /**
      * @return
      */
-    public static String requestLog2Json(String requestLog){
+    public static String requestLog2Json(String requestLog) {
         String[] split = requestLog.split(", ");
-        StringBuilder sb =new StringBuilder("{");
+        StringBuilder sb = new StringBuilder("{");
         for (String s : split) {
             String[] split1 = s.split("=");
             sb.append("\"")
@@ -229,27 +240,25 @@ public class StringUtil {
                     .append("\"")
                     .append(":");
 
-            if (!isNumric(split1[1])){
+            if (!isNumric(split1[1])) {
                 sb.append("\"");
             }
             sb.append(split1[1]);
-            if (!isNumric(split1[1])){
+            if (!isNumric(split1[1])) {
                 sb.append("\"");
             }
             sb.append(",");
         }
         return sb
-                .replace(sb.length()-1,sb.length(),"}")
+                .replace(sb.length() - 1, sb.length(), "}")
                 .toString();
     }
 
-    public static boolean isUpperWords(char c){
-        return c >= CommonCsts.CHAR_A_UPPER && c<= CommonCsts.CHAR_Z_UPPER;
+    public static boolean isUpperWords(char c) {
+        return c >= CommonCsts.CHAR_A_UPPER && c <= CommonCsts.CHAR_Z_UPPER;
     }
 
-    public static boolean isLowerWords(char c){
-        return c >= CommonCsts.CHAR_A_LOWER && c<= CommonCsts.CHAR_Z_LOWER;
+    public static boolean isLowerWords(char c) {
+        return c >= CommonCsts.CHAR_A_LOWER && c <= CommonCsts.CHAR_Z_LOWER;
     }
-
-
 }

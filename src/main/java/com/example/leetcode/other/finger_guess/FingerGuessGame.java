@@ -60,7 +60,6 @@ public class FingerGuessGame {
             scoreMap.get(playerA.getPlayerNum()).add(aScore);
             scoreMap.get(playerB.getPlayerNum()).add(bScore);
 
-            System.out.printf("");
             System.out.printf(
                     "第[%d]局: 玩家[%s] 出: %s; 玩家[%s] 出: %s; ",
                     round, playerA.getPlayerNum(), playerAMove.getDesc(), playerB.getPlayerNum(), playerBMove.getDesc()

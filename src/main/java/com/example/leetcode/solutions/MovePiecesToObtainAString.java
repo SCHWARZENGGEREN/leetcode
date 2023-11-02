@@ -58,7 +58,7 @@ public class MovePiecesToObtainAString {
      * @param target
      * @return
      */
-    @Score(time = {Score.S.COPIED, Score.S.UNSETTLED})
+    @Score(time = Score.S.D, memory = Score.S.D, way = Score.WAY.COPIED)
     public static boolean canChange(String start, String target) {
         if (!start.replaceAll("_", "").equals(target.replaceAll("_", "")))
             return false;

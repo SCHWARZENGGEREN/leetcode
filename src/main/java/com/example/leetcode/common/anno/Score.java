@@ -8,20 +8,11 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Score {
-    S[] time();
+    S time();
     S memory() default S.NONE;
 
+    WAY way() default WAY.SELF;
     /**
-     * SSS:99-100
-     * SS:90-99
-     * S:75-90
-     * A:50-75
-     * B:25-50
-     * C:10-25
-     * D:0-10
-     *
-     *
-     * [2021-11-4]
      * FULL:满昏!
      * SSS:99-99.999
      * SS:90-99
@@ -29,7 +20,8 @@ public @interface Score {
      * A:60-80
      * B:40-60
      * C:20-40
-     * D:0-20
+     * D:5-20
+     * E:0-5 拉大垮
      */
 
     enum S {
@@ -41,11 +33,16 @@ public @interface Score {
         B,
         C,
         D,
+        E,
 
-        COPIED,//cv大法
         UNSETTLED,//未解决
         NONE,//未通过
         OT,//over time 超时
         OOM,// out of memory 内存溢出
+    }
+
+    enum WAY{
+        SELF,
+        COPIED
     }
 }
