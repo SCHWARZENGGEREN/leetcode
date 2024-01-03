@@ -2,11 +2,8 @@ package com.example.leetcode.other.finger_guess;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author renxinheng
@@ -17,6 +14,11 @@ import java.util.regex.Pattern;
 public class CrazyDave extends Player {
 
     private Random random = new Random(System.currentTimeMillis() + 10086);
+
+    public CrazyDave(){
+        setPlayerNum("疯狂戴夫");
+        setSlogan("歪比歪比 ,歪比巴卜");
+    }
 
     /**
      * 出牌策略:
@@ -39,13 +41,13 @@ public class CrazyDave extends Player {
         //次数越多 随机权重越高 超过5次直接不随机了
         int j = 0;
         for (int i = size - 2; i >= 0; i--, j++) {
-            if (j >= 5) return getWinner(lastOpponentMove);
+            if (j >= 5) return FGUtils.getRepressive(lastOpponentMove);
             if (opponentMoves.get(i) != lastOpponentMove) break;
         }
         if (j > 0) {
             //公式:(1+j*0.2)*random > 1 陡函数
             if ((1 + j * (j + 0.1d)) * random.nextDouble() >= 1) {
-                return getWinner(lastOpponentMove);
+                return FGUtils.getRepressive(lastOpponentMove);
             }
         }
         //针对上次
@@ -71,11 +73,5 @@ public class CrazyDave extends Player {
 
     private Move getRandomMove() {
         return Move.values()[random.nextInt(3)];
-    }
-
-    private static Move getWinner(Move opponent) {
-        if (opponent == Move.SCISSORS) return Move.ROCK;
-        if (opponent == Move.ROCK) return Move.PAPER;
-        return Move.SCISSORS;
     }
 }

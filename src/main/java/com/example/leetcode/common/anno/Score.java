@@ -43,6 +43,7 @@ public @interface Score {
 
     enum WAY{
         SELF,
-        COPIED
+        COPIED,
+        REFER//参考
     }
 }

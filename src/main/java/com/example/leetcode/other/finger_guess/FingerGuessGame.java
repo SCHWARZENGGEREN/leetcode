@@ -11,13 +11,14 @@ import java.util.*;
 public class FingerGuessGame {
 
     public static void main(String[] args) {
-        Player playerA = PlayerEnum.BlackTiger.callYourHero();//主场
+//        Player playerA = PlayerEnum.BlackTiger.callYourHero();//主场
 //        playerA = new CrazyDave();
 //        playerA.setPlayerNum("疯狂戴夫");
 //        playerA.setSlogan("歪比歪比 歪比巴卜");
+        CrazyDave crazyDave = new CrazyDave();
         Player playerB = PlayerEnum.AI.callYourHero();//客场
 
-        new PlayerContext(playerA, playerB).start(100);
+        new PlayerContext(crazyDave, playerB).start(100);
 
 //        System.out.println(UUID.randomUUID().toString());
     }

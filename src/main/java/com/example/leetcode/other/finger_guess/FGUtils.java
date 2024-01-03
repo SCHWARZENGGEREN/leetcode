@@ -43,17 +43,6 @@ public class FGUtils {
         return Move.values()[((int) System.currentTimeMillis() % 3)];
     }
 
-    /**
-     * 对手牌
-     * @param opponent
-     * @return
-     */
-    public static Move getWinner(Move opponent) {
-        if (opponent == Move.SCISSORS) return Move.ROCK;
-        if (opponent == Move.ROCK) return Move.PAPER;
-        return Move.SCISSORS;
-    }
-
     public static int fight(Move current, Move opponent){
         if (current == Move.NOOP|| opponent == Move.NOOP) return -1;
         if (current == opponent) return 0;
@@ -61,5 +50,12 @@ public class FGUtils {
         if (current == Move.ROCK) return opponent == Move.SCISSORS? 1: -1;
         if (current == Move.PAPER) return opponent == Move.ROCK? 1: -1;
         return -1;
+    }
+
+    //克制牌
+    public static Move getRepressive(Move opponent) {
+        if (opponent == Move.SCISSORS) return Move.ROCK;
+        if (opponent == Move.ROCK) return Move.PAPER;
+        return Move.SCISSORS;
     }
 }

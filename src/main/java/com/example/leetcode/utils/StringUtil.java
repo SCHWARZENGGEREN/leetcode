@@ -92,7 +92,7 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        String hump = "rings-and-rods";
+        String hump = "remove-nodes-from-linked-list";
         System.out.println(getHumpName(hump, SepConsts.MIDLINE));
         System.out.println(getLeetcodeUrl("MovePiecesToObtainAString"));
 //        getAllLetters();

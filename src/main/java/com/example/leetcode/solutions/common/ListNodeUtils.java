@@ -86,4 +86,16 @@ public class ListNodeUtils {
 
         return dump.next;
     }
+
+    //翻转链表
+    public static ListNode reverseNode(ListNode head) {
+        ListNode current = head, reverseNode = null;
+        while (current != null){
+            ListNode tempNode = new ListNode(current.val);
+            tempNode.next = reverseNode;
+            reverseNode = tempNode;
+            current = current.next;
+        }
+        return reverseNode;
+    }
 }
