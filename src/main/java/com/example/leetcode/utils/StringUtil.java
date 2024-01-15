@@ -71,7 +71,6 @@ public class StringUtil {
                     sb.append(subStr.replaceFirst(String.valueOf(subStr.charAt(0)), String.valueOf(subStr.charAt(0)).toUpperCase()));
                 }
             }
-
         }
         return sb.toString();
     }
@@ -92,7 +91,7 @@ public class StringUtil {
     }
 
     public static void main(String[] args) {
-        String hump = "remove-nodes-from-linked-list";
+        String hump = "remove-duplicates-from-sorted-list-ii";
         System.out.println(getHumpName(hump, SepConsts.MIDLINE));
         System.out.println(getLeetcodeUrl("MovePiecesToObtainAString"));
 //        getAllLetters();
@@ -110,11 +109,11 @@ public class StringUtil {
     public static void testRegex() {
         String regex = "^[0-9Xx]\\d{18}";
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
-        System.out.println(pattern.matcher("410726199110152419").matches());
-        System.out.println(pattern.matcher("41072619911015241X").matches());
-        System.out.println(pattern.matcher("41072619911015241S").matches());
-        System.out.println(pattern.matcher("4107261991101524191").matches());
-        System.out.println(pattern.matcher("4107261991101524x").matches());
+        System.out.println(pattern.matcher("410110199726241519").matches());
+        System.out.println(pattern.matcher("41011019972624151X").matches());
+        System.out.println(pattern.matcher("41011019972624151S").matches());
+        System.out.println(pattern.matcher("4101101997262415191").matches());
+        System.out.println(pattern.matcher("4101101997262415x").matches());
     }
 
     private static void printDateDemo() {
